@@ -1,1 +1,39 @@
+# ==========================================================
+# KYNEX - Git Ignore
+# ==========================================================
 
+# Visual Studio Code
+.vscode/
+
+# Sistema operativo Windows
+Thumbs.db
+Desktop.ini
+
+# Sistema operativo macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Dependencias futuras
+node_modules/
+
+# Variables de entorno futuras
+.env
+.env.local
+.env.*.local
+
+# Archivos generados
+dist/
+build/
+
+# Backups
+*.bak
+*.backup
+
+# Archivos comprimidos de entrega local
+*.zip
