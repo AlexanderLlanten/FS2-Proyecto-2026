@@ -40,6 +40,11 @@
         href="../../assets/css/components.css"
     >
 
+    <link
+        rel="stylesheet"
+        href="../../assets/css/forms.css"
+    >
+
 </head>
 
 
@@ -227,46 +232,222 @@
 
     <main id="main-content">
 
-        <section class="page-header">
+        <section class="form-section section-spacing">
 
             <div class="container">
 
-                <p class="section-eyebrow">
-                    HABLEMOS
-                </p>
+                <div class="form-layout">
 
-                <h1>
-                    Contacto
-                </h1>
+                    <div>
 
-                <p>
-                    Canal de comunicación para consultas relacionadas con KYNEX.
-                </p>
+                        <p class="section-eyebrow">
+                            CONTACTO
+                        </p>
 
-            </div>
+                        <h2>
+                            Hablemos
+                        </h2>
 
-        </section>
+                        <p>
+                            Envíanos tu consulta y revisaremos
+                            tu mensaje.
+                        </p>
 
 
-        <section class="section-spacing">
+                        <form
+                            class="kynex-form"
+                            id="contact-form"
+                            novalidate
+                        >
 
-            <div class="container">
+                            <div class="form-grid">
 
-                <div class="development-placeholder">
 
-                    <i class="bi bi-chat-dots"></i>
+                                <!-- NOMBRE -->
 
-                    <h2>
-                        Formulario de contacto
-                    </h2>
+                                <div class="form-group form-group-full">
 
-                    <p>
-                        El formulario y sus validaciones dinámicas
-                        con JavaScript serán incorporados
-                        en la etapa correspondiente.
-                    </p>
+                                    <label for="contact-name">
+
+                                        Nombre
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="contact-name"
+                                        name="name"
+                                        class="form-control-kynex"
+                                        maxlength="100"
+                                        autocomplete="name"
+                                        required
+                                    >
+
+                                    <p
+                                        class="field-message"
+                                        id="contact-name-message"
+                                    ></p>
+
+                                </div>
+
+
+                                <!-- EMAIL -->
+
+                                <div class="form-group form-group-full">
+
+                                    <label for="contact-email">
+
+                                        Correo electrónico
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="contact-email"
+                                        name="email"
+                                        class="form-control-kynex"
+                                        maxlength="100"
+                                        autocomplete="email"
+                                        required
+                                    >
+
+                                    <p
+                                        class="field-message"
+                                        id="contact-email-message"
+                                    ></p>
+
+                                </div>
+
+
+                                <!-- COMENTARIO -->
+
+                                <div class="form-group form-group-full">
+
+                                    <label for="contact-comment">
+
+                                        Comentario
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <textarea
+                                        id="contact-comment"
+                                        name="comment"
+                                        class="form-control-kynex"
+                                        maxlength="500"
+                                        rows="6"
+                                        required
+                                    ></textarea>
+
+
+                                    <div class="textarea-meta">
+
+                                        <p
+                                            class="field-message"
+                                            id="contact-comment-message"
+                                        ></p>
+
+                                        <span id="comment-counter">
+                                            0 / 500
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-actions">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-kynex-primary form-submit"
+                                >
+                                    Enviar mensaje
+
+                                    <i class="bi bi-send"></i>
+                                </button>
+
+                            </div>
+
+
+                            <div
+                                class="form-status"
+                                id="contact-status"
+                                role="status"
+                                aria-live="polite"
+                            >
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                    <aside class="form-side-panel">
+
+                        <i class="bi bi-chat-dots"></i>
+
+                        <h2>
+                            Contacta a KYNEX
+                        </h2>
+
+                        <p>
+                            Este formulario permite canalizar
+                            dudas y solicitudes de los usuarios.
+                        </p>
+
+
+                        <ul class="form-side-list">
+
+                            <li>
+
+                                <i class="bi bi-envelope"></i>
+
+                                <span>
+                                    Consultas generales.
+                                </span>
+
+                            </li>
+
+                            <li>
+
+                                <i class="bi bi-bag"></i>
+
+                                <span>
+                                    Información de productos.
+                                </span>
+
+                            </li>
+
+                            <li>
+
+                                <i class="bi bi-question-circle"></i>
+
+                                <span>
+                                    Soporte y orientación.
+                                </span>
+
+                            </li>
+
+                        </ul>
+
+                    </aside>
 
                 </div>
+
             </div>
 
         </section>
@@ -430,6 +611,11 @@
     <script
         src="../../assets/js/app.js"
         defer
+    ></script>
+
+    <script
+        type="module"
+        src="../../assets/js/modules/contact.js"
     ></script>
 
 </body>

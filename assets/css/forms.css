@@ -315,6 +315,61 @@
         var(--color-primary);
 }
 
+/* ---------------------------------------------------------
+   PASSWORD
+--------------------------------------------------------- */
+
+.password-field {
+    position: relative;
+}
+
+.password-field .form-control-kynex {
+    padding-right: 52px;
+}
+
+.password-toggle {
+    position: absolute;
+
+    top: 50%;
+    right: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    background: transparent;
+
+    color: var(--color-text-muted);
+
+    border: 0;
+
+    transform: translateY(-50%);
+
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: var(--color-primary);
+}
+
+.textarea-meta {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.textarea-meta > span {
+    color: var(--color-text-muted);
+
+    font-size: 0.75rem;
+
+    white-space: nowrap;
+}
+
 
 /* ---------------------------------------------------------
    RESPONSIVE

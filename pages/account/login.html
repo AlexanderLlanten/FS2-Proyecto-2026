@@ -40,6 +40,11 @@
         href="../../assets/css/components.css"
     >
 
+    <link
+        rel="stylesheet"
+        href="../../assets/css/forms.css"
+    >
+
 </head>
 
 
@@ -248,41 +253,222 @@
         </section>
 
 
-        <section class="section-spacing">
+        <section class="form-section section-spacing">
 
             <div class="container">
 
-                <div class="development-placeholder">
+                <div class="form-layout">
 
-                    <i class="bi bi-person-circle"></i>
+                    <!-- ==================================================
+                        LOGIN
+                    =================================================== -->
 
-                    <h2>
-                        Acceso de usuario
-                    </h2>
+                    <div>
 
-                    <p>
-                        Inicia sesión en tu cuenta KYNEX
-                        o crea una nueva cuenta para comenzar.
-                    </p>
+                        <p class="section-eyebrow">
+                            ACCESO
+                        </p>
 
-                    <div class="hero-actions mt-4">
+                        <h2>
+                            Bienvenido de vuelta
+                        </h2>
 
-                        <a
-                            href="register.html"
-                            class="btn btn-kynex-primary"
+                        <p>
+                            Ingresa tus credenciales para acceder
+                            a tu cuenta KYNEX.
+                        </p>
+
+
+                        <form
+                            class="kynex-form"
+                            id="login-form"
+                            novalidate
                         >
-                            Crear cuenta
-                        </a>
 
-                        <button
-                            type="button"
-                            class="btn btn-kynex-secondary"
-                            disabled
-                        >
-                            Iniciar sesión
-                        </button>
+                            <div class="form-grid">
+
+
+                                <!-- EMAIL -->
+
+                                <div class="form-group form-group-full">
+
+                                    <label for="login-email">
+
+                                        Correo electrónico
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="login-email"
+                                        name="email"
+                                        class="form-control-kynex"
+                                        maxlength="100"
+                                        placeholder="usuario@gmail.com"
+                                        autocomplete="email"
+                                        required
+                                    >
+
+                                    <small class="form-help">
+                                        Se permiten cuentas @duoc.cl,
+                                        @profesor.duoc.cl y @gmail.com.
+                                    </small>
+
+                                    <p
+                                        class="field-message"
+                                        id="login-email-message"
+                                    ></p>
+
+                                </div>
+
+
+                                <!-- PASSWORD -->
+
+                                <div class="form-group form-group-full">
+
+                                    <label for="login-password">
+
+                                        Contraseña
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <div class="password-field">
+
+                                        <input
+                                            type="password"
+                                            id="login-password"
+                                            name="password"
+                                            class="form-control-kynex"
+                                            minlength="4"
+                                            maxlength="10"
+                                            autocomplete="current-password"
+                                            required
+                                        >
+
+                                        <button
+                                            type="button"
+                                            class="password-toggle"
+                                            id="password-toggle"
+                                            aria-label="Mostrar contraseña"
+                                        >
+
+                                            <i class="bi bi-eye"></i>
+
+                                        </button>
+
+                                    </div>
+
+                                    <small class="form-help">
+                                        Entre 4 y 10 caracteres.
+                                    </small>
+
+                                    <p
+                                        class="field-message"
+                                        id="login-password-message"
+                                    ></p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-actions">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-kynex-primary form-submit"
+                                >
+                                    Iniciar sesión
+
+                                    <i class="bi bi-box-arrow-in-right"></i>
+                                </button>
+
+
+                                <a
+                                    href="register.html"
+                                    class="btn btn-kynex-secondary"
+                                >
+                                    Crear cuenta
+                                </a>
+
+                            </div>
+
+
+                            <div
+                                class="form-status"
+                                id="login-status"
+                                role="status"
+                                aria-live="polite"
+                            >
+                            </div>
+
+                        </form>
 
                     </div>
+
+
+                    <!-- ==================================================
+                        PANEL LATERAL
+                    =================================================== -->
+
+                    <aside class="form-side-panel">
+
+                        <i class="bi bi-person-circle"></i>
+
+                        <h2>
+                            Mi KYNEX
+                        </h2>
+
+                        <p>
+                            El acceso permitirá gestionar progresivamente
+                            compras, preferencias y funcionalidades
+                            personalizadas.
+                        </p>
+
+
+                        <ul class="form-side-list">
+
+                            <li>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                <span>
+                                    Acceso personalizado.
+                                </span>
+
+                            </li>
+
+                            <li>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                <span>
+                                    Gestión de futuras compras.
+                                </span>
+
+                            </li>
+
+                            <li>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                <span>
+                                    Experiencia KYNEX personalizada.
+                                </span>
+
+                            </li>
+
+                        </ul>
+
+                    </aside>
 
                 </div>
 
@@ -360,7 +546,10 @@
                     <ul class="footer-links">
 
                         <li>
-                            <a href="../shop/products.html">
+                            <a 
+                                class="nav-link"
+                                href="../shop/products.html"
+                            >
                                 Tienda
                             </a>
                         </li>
@@ -451,6 +640,11 @@
         defer
     ></script>
 
+    <script
+        type="module"
+        src="../../assets/js/modules/login.js"
+    ></script>
+    
 </body>
 
 </html>
