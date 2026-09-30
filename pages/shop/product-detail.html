@@ -40,6 +40,12 @@
         href="../../assets/css/components.css"
     >
 
+    <link
+        rel="stylesheet"
+        href="../../assets/css/shop.css"
+    >
+
+
 </head>
 
 
@@ -227,44 +233,591 @@
 
     <main id="main-content">
 
-        <section class="page-header">
+        <!-- ==================================================
+            BREADCRUMB
+        =================================================== -->
+
+        <section class="product-breadcrumb">
 
             <div class="container">
 
-                <p class="section-eyebrow">
-                    KYNEX STORE
-                </p>
+                <nav aria-label="Ruta de navegación">
 
-                <h1>
-                    Detalle de producto
-                </h1>
+                    <ol class="breadcrumb mb-0">
 
-                <p>
-                    Información detallada del suplemento seleccionado.
-                </p>
+                        <li class="breadcrumb-item">
+
+                            <a href="../../index.html">
+                                Inicio
+                            </a>
+
+                        </li>
+
+                        <li class="breadcrumb-item">
+
+                            <a href="products.html">
+                                Productos
+                            </a>
+
+                        </li>
+
+                        <li
+                            class="breadcrumb-item active"
+                            aria-current="page"
+                            id="breadcrumb-product"
+                        >
+                            Producto
+                        </li>
+
+                    </ol>
+
+                </nav>
 
             </div>
 
         </section>
 
 
-        <section class="section-spacing">
+        <!-- ==================================================
+            PRODUCTO
+        =================================================== -->
+
+        <section class="product-detail-section section-spacing">
 
             <div class="container">
 
-                <div class="development-placeholder">
+                <!-- Producto encontrado -->
 
-                    <i class="bi bi-box-seam"></i>
+                <div
+                    class="row g-5 align-items-start"
+                    id="product-detail-container"
+                >
+
+                    <!-- Visual -->
+
+                    <div class="col-lg-6">
+
+                        <div class="product-detail-visual">
+
+                            <span
+                                class="stock-badge"
+                                id="product-stock-badge"
+                            >
+                                Disponible
+                            </span>
+
+                            <i
+                                class="bi bi-box-seam"
+                                id="product-icon"
+                                aria-hidden="true"
+                            ></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Información -->
+
+                    <div class="col-lg-6">
+
+                        <div class="product-detail-info">
+
+                            <div class="product-detail-meta">
+
+                                <span id="product-category">
+                                    Categoría
+                                </span>
+
+                                <span id="product-brand">
+                                    Marca
+                                </span>
+
+                            </div>
+
+
+                            <h1 id="product-name">
+                                Producto
+                            </h1>
+
+
+                            <p
+                                class="product-detail-description"
+                                id="product-description"
+                            >
+                                Cargando información...
+                            </p>
+
+
+                            <!-- Tags -->
+
+                            <div
+                                class="product-detail-tags"
+                                id="product-tags"
+                            >
+                            </div>
+
+
+                            <!-- Precio -->
+
+                            <div class="product-purchase">
+
+                                <div class="product-price">
+
+                                    <small>
+                                        Precio
+                                    </small>
+
+                                    <strong id="product-price">
+                                        $0
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="product-stock-info">
+
+                                    <i class="bi bi-box-seam"></i>
+
+                                    <span id="product-stock">
+                                        Stock disponible
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Formato -->
+
+                            <div class="product-attributes">
+
+                                <div>
+
+                                    <span>
+                                        Formato
+                                    </span>
+
+                                    <strong id="product-format">
+                                        -
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        Sabor
+                                    </span>
+
+                                    <strong id="product-flavor">
+                                        -
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Cantidad -->
+
+                            <div class="product-quantity">
+
+                                <label for="product-quantity">
+                                    Cantidad
+                                </label>
+
+                                <div class="quantity-control">
+
+                                    <button
+                                        type="button"
+                                        id="quantity-minus"
+                                        aria-label="Disminuir cantidad"
+                                    >
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+
+                                    <input
+                                        type="number"
+                                        id="product-quantity"
+                                        value="1"
+                                        min="1"
+                                        max="10"
+                                        readonly
+                                    >
+
+                                    <button
+                                        type="button"
+                                        id="quantity-plus"
+                                        aria-label="Aumentar cantidad"
+                                    >
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Acción -->
+
+                            <button
+                                type="button"
+                                class="btn btn-kynex-primary product-add-button"
+                                id="add-to-cart"
+                            >
+
+                                <i class="bi bi-bag-plus"></i>
+
+                                Agregar al carrito
+
+                            </button>
+
+
+                            <p
+                                class="product-cart-feedback"
+                                id="cart-feedback"
+                                role="status"
+                                aria-live="polite"
+                            >
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                    INFORMACIÓN DETALLADA
+                =================================================== -->
+
+                <div
+                    class="product-information"
+                    id="product-information"
+                >
+
+
+                    <!-- BENEFICIOS -->
+
+                    <article class="product-info-card">
+
+                        <div class="product-info-heading">
+
+                            <i class="bi bi-graph-up-arrow"></i>
+
+                            <h2>
+                                Beneficios
+                            </h2>
+
+                        </div>
+
+                        <ul id="product-benefits">
+                        </ul>
+
+                    </article>
+
+
+                    <!-- INGREDIENTES -->
+
+                    <article class="product-info-card">
+
+                        <div class="product-info-heading">
+
+                            <i class="bi bi-list-check"></i>
+
+                            <h2>
+                                Ingredientes
+                            </h2>
+
+                        </div>
+
+                        <ul id="product-ingredients">
+                        </ul>
+
+                    </article>
+
+
+                    <!-- ALÉRGENOS -->
+
+                    <article class="product-info-card">
+
+                        <div class="product-info-heading">
+
+                            <i class="bi bi-exclamation-triangle"></i>
+
+                            <h2>
+                                Alérgenos
+                            </h2>
+
+                        </div>
+
+                        <div id="product-allergens">
+                        </div>
+
+                    </article>
+
+
+                    <!-- MODO DE USO -->
+
+                    <article class="product-info-card">
+
+                        <div class="product-info-heading">
+
+                            <i class="bi bi-cup-straw"></i>
+
+                            <h2>
+                                Modo de uso
+                            </h2>
+
+                        </div>
+
+
+                        <dl class="usage-list">
+
+                            <div>
+
+                                <dt>
+                                    Porción
+                                </dt>
+
+                                <dd id="product-serving">
+                                    -
+                                </dd>
+
+                            </div>
+
+
+                            <div>
+
+                                <dt>
+                                    Preparación
+                                </dt>
+
+                                <dd id="product-preparation">
+                                    -
+                                </dd>
+
+                            </div>
+
+
+                            <div>
+
+                                <dt>
+                                    Momento de consumo
+                                </dt>
+
+                                <dd id="product-moment">
+                                    -
+                                </dd>
+
+                            </div>
+
+                        </dl>
+
+                    </article>
+
+                </div>
+
+
+                <!-- ==================================================
+                    INFORMACIÓN NUTRICIONAL
+                =================================================== -->
+
+                <section
+                    class="nutrition-section"
+                    aria-labelledby="nutrition-title"
+                >
+
+                    <div class="section-heading">
+
+                        <p class="section-eyebrow">
+                            INFORMACIÓN DEL PRODUCTO
+                        </p>
+
+                        <h2 id="nutrition-title">
+                            Información nutricional
+                        </h2>
+
+                    </div>
+
+
+                    <div class="nutrition-table-wrapper">
+
+                        <table class="nutrition-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th scope="col">
+                                        Nutriente
+                                    </th>
+
+                                    <th scope="col">
+                                        Por porción
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <th scope="row">
+                                        Tamaño de porción
+                                    </th>
+
+                                    <td id="nutrition-serving">
+                                        -
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <th scope="row">
+                                        Calorías
+                                    </th>
+
+                                    <td id="nutrition-calories">
+                                        -
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <th scope="row">
+                                        Proteínas
+                                    </th>
+
+                                    <td id="nutrition-protein">
+                                        -
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <th scope="row">
+                                        Carbohidratos
+                                    </th>
+
+                                    <td id="nutrition-carbohydrates">
+                                        -
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <th scope="row">
+                                        Grasas
+                                    </th>
+
+                                    <td id="nutrition-fats">
+                                        -
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ==================================================
+                    CERTIFICACIONES Y SEGURIDAD
+                =================================================== -->
+
+                <section
+                    class="product-safety"
+                    aria-labelledby="safety-title"
+                >
+
+                    <div>
+
+                        <p class="section-eyebrow">
+                            TRANSPARENCIA
+                        </p>
+
+                        <h2 id="safety-title">
+                            Calidad y seguridad
+                        </h2>
+
+                    </div>
+
+
+                    <div
+                        class="certification-list"
+                        id="product-certifications"
+                    >
+                    </div>
+
+
+                    <div class="product-warning">
+
+                        <i
+                            class="bi bi-exclamation-circle"
+                            aria-hidden="true"
+                        ></i>
+
+                        <div>
+
+                            <strong>
+                                Advertencia
+                            </strong>
+
+                            <p id="product-warning">
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ==================================================
+                    PRODUCTO NO ENCONTRADO
+                =================================================== -->
+
+                <div
+                    class="catalog-empty d-none"
+                    id="product-not-found"
+                >
+
+                    <i class="bi bi-search"></i>
 
                     <h2>
-                        Ficha de producto
+                        Producto no encontrado
                     </h2>
 
                     <p>
-                        Esta vista incorporará imágenes, precio,
-                        información nutricional, ingredientes,
-                        alérgenos, modo de uso y carrito.
+                        El producto solicitado no existe
+                        o ya no se encuentra disponible.
                     </p>
+
+                    <a
+                        href="products.html"
+                        class="btn btn-kynex-primary mt-3"
+                    >
+                        Volver al catálogo
+                    </a>
 
                 </div>
 
@@ -431,6 +984,11 @@
     <script
         src="../../assets/js/app.js"
         defer
+    ></script>
+
+    <script
+        type="module"
+        src="../../assets/js/modules/product-detail.js"
     ></script>
 
 </body>

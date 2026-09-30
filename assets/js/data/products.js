@@ -41,6 +41,14 @@ export const products = [
             "Soya"
         ],
 
+        ingredients: [
+            "Proteína de suero de leche",
+            "Cacao en polvo",
+            "Saborizante",
+            "Lecitina de soya",
+            "Edulcorante"
+        ],
+
         description:
             "Proteína de suero orientada al apoyo nutricional posterior al entrenamiento.",
 
@@ -124,6 +132,10 @@ export const products = [
 
         allergens: [],
 
+        ingredients: [
+            "Creatina monohidratada"
+        ],
+
         description:
             "Creatina monohidratada en polvo para complementar planes de entrenamiento.",
 
@@ -206,6 +218,14 @@ export const products = [
 
         allergens: [],
 
+        ingredients: [
+            "Citrulina",
+            "Beta-alanina",
+            "Cafeína",
+            "Saborizante",
+            "Edulcorante"
+        ],
+
         description:
             "Fórmula demostrativa orientada al consumo previo a sesiones de entrenamiento.",
 
@@ -284,6 +304,12 @@ export const products = [
         dietaryTags: [],
 
         allergens: [],
+
+        ingredients: [
+            "Complejo vitamínico",
+            "Minerales",
+            "Cápsula vegetal"
+        ],
 
         description:
             "Complemento vitamínico demostrativo para acompañar una alimentación equilibrada.",
@@ -367,6 +393,13 @@ export const products = [
 
         allergens: [],
 
+        ingredients: [
+            "Proteína de arveja",
+            "Proteína de arroz",
+            "Saborizante natural",
+            "Edulcorante"
+        ],
+
         description:
             "Proteína vegetal demostrativa orientada a usuarios que prefieren alternativas sin ingredientes lácteos.",
 
@@ -448,6 +481,11 @@ export const products = [
         ],
 
         allergens: [],
+
+        ingredients: [
+            "Magnesio",
+            "Cápsula vegetal"
+        ],
 
         description:
             "Suplemento demostrativo de magnesio presentado como complemento dentro del catálogo KYNEX.",
