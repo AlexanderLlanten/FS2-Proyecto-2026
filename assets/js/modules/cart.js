@@ -148,8 +148,13 @@ function getDetailedCart() {
                     ...product,
 
                     quantity:
-                        Number(cartItem.quantity)
-                        || 1
+                        Math.min(
+                            Math.max(
+                                Number(cartItem.quantity) || 1,
+                                1
+                            ),
+                            product.stock
+                        )
                 };
 
             }

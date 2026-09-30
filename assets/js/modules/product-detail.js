@@ -405,6 +405,38 @@ function initializeQuantity() {
    CARRITO
 ========================================================= */
 
+function getStoredCart() {
+
+    const storedCart =
+        localStorage.getItem("kynex_cart");
+
+    if (!storedCart) {
+        return [];
+    }
+
+    try {
+
+        const cart =
+            JSON.parse(storedCart);
+
+        return Array.isArray(cart)
+            ? cart
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "No fue posible leer el carrito almacenado.",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
 function addProductToCart() {
 
     const quantity =
@@ -416,12 +448,7 @@ function addProductToCart() {
 
 
     const storedCart =
-        JSON.parse(
-            localStorage.getItem(
-                "kynex_cart"
-            )
-            || "[]"
-        );
+        getStoredCart();
 
 
     const existingProduct =

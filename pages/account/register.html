@@ -12,7 +12,7 @@
 
     <meta
         name="description"
-        content="Catálogo de suplementos deportivos KYNEX."
+        content="Crea tu cuenta KYNEX y registra tus datos para acceder a las funcionalidades personalizadas de la plataforma."
     >
 
     <title>Crear cuenta | KYNEX</title>
@@ -38,6 +38,11 @@
     <link
         rel="stylesheet"
         href="../../assets/css/components.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../../assets/css/forms.css"
     >
 
 </head>
@@ -113,8 +118,7 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link active"
-                                aria-current="page"
+                                class="nav-link"
                                 href="../shop/products.html"
                             >
                                 Tienda
@@ -248,22 +252,426 @@
         </section>
 
 
-        <section class="section-spacing">
+        <section
+            class="form-section section-spacing"
+        >
 
             <div class="container">
 
-                <div class="development-placeholder">
+                <div class="form-layout">
 
-                    <i class="bi bi-person-plus"></i>
 
-                    <h2>
-                        Registro de usuario
-                    </h2>
+                    <!-- ==================================================
+                        FORMULARIO
+                    =================================================== -->
 
-                    <p>
-                        Esta vista contendrá el formulario completo
-                        de registro y sus reglas de validación.
-                    </p>
+                    <div>
+
+                        <p class="section-eyebrow">
+                            REGISTRO
+                        </p>
+
+                        <h2>
+                            Crea tu cuenta
+                        </h2>
+
+                        <p>
+                            Completa tus datos para registrarte
+                            en KYNEX.
+                        </p>
+
+
+                        <form
+                            class="kynex-form"
+                            id="register-form"
+                            novalidate
+                        >
+
+                            <div class="form-grid">
+
+
+                                <!-- RUN -->
+
+                                <div class="form-group">
+
+                                    <label for="run">
+
+                                        RUN
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="run"
+                                        name="run"
+                                        class="form-control-kynex"
+                                        placeholder="123456785"
+                                        minlength="7"
+                                        maxlength="9"
+                                        autocomplete="off"
+                                        required
+                                    >
+
+                                    <small class="form-help">
+                                        Sin puntos ni guion.
+                                    </small>
+
+                                    <p
+                                        class="field-message"
+                                        id="run-message"
+                                    ></p>
+
+                                </div>
+
+
+                                <!-- NOMBRE -->
+
+                                <div class="form-group">
+
+                                    <label for="first-name">
+
+                                        Nombre
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="first-name"
+                                        name="firstName"
+                                        class="form-control-kynex"
+                                        maxlength="50"
+                                        autocomplete="given-name"
+                                        required
+                                    >
+
+                                    <p
+                                        class="field-message"
+                                        id="first-name-message"
+                                    ></p>
+
+                                </div>
+
+
+                                <!-- APELLIDOS -->
+
+                                <div
+                                    class="
+                                        form-group
+                                        form-group-full
+                                    "
+                                >
+
+                                    <label for="last-name">
+
+                                        Apellidos
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="last-name"
+                                        name="lastName"
+                                        class="form-control-kynex"
+                                        maxlength="100"
+                                        autocomplete="family-name"
+                                        required
+                                    >
+
+                                    <p
+                                        class="field-message"
+                                        id="last-name-message"
+                                    ></p>
+
+                                </div>
+
+
+                                <!-- EMAIL -->
+
+                                <div
+                                    class="
+                                        form-group
+                                        form-group-full
+                                    "
+                                >
+
+                                    <label for="email">
+
+                                        Correo electrónico
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        class="form-control-kynex"
+                                        maxlength="100"
+                                        placeholder="usuario@gmail.com"
+                                        autocomplete="email"
+                                        required
+                                    >
+
+                                    <small class="form-help">
+                                        Se admiten correos @duoc.cl,
+                                        @profesor.duoc.cl y @gmail.com.
+                                    </small>
+
+                                    <p
+                                        class="field-message"
+                                        id="email-message"
+                                    ></p>
+
+                                </div>
+
+
+                                <!-- FECHA NACIMIENTO -->
+
+                                <div class="form-group">
+
+                                    <label for="birth-date">
+                                        Fecha de nacimiento
+                                    </label>
+
+                                    <input
+                                        type="date"
+                                        id="birth-date"
+                                        name="birthDate"
+                                        class="form-control-kynex"
+                                        autocomplete="bday"
+                                    >
+
+                                    <p
+                                        class="field-message"
+                                        id="birth-date-message"
+                                    ></p>
+
+                                </div>
+
+
+                                <!-- REGIÓN -->
+
+                                <div class="form-group">
+
+                                    <label for="region">
+
+                                        Región
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <select
+                                        id="region"
+                                        name="region"
+                                        class="form-select-kynex"
+                                        required
+                                    >
+
+                                        <option value="">
+                                            Selecciona una región
+                                        </option>
+
+                                    </select>
+
+                                    <p
+                                        class="field-message"
+                                        id="region-message"
+                                    ></p>
+
+                                </div>
+
+
+                                <!-- COMUNA -->
+
+                                <div class="form-group">
+
+                                    <label for="commune">
+
+                                        Comuna
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <select
+                                        id="commune"
+                                        name="commune"
+                                        class="form-select-kynex"
+                                        disabled
+                                        required
+                                    >
+
+                                        <option value="">
+                                            Selecciona primero una región
+                                        </option>
+
+                                    </select>
+
+                                    <p
+                                        class="field-message"
+                                        id="commune-message"
+                                    ></p>
+
+                                </div>
+
+
+                                <!-- DIRECCIÓN -->
+
+                                <div
+                                    class="
+                                        form-group
+                                        form-group-full
+                                    "
+                                >
+
+                                    <label for="address">
+
+                                        Dirección
+
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <textarea
+                                        id="address"
+                                        name="address"
+                                        class="form-control-kynex"
+                                        maxlength="300"
+                                        rows="3"
+                                        autocomplete="street-address"
+                                        required
+                                    ></textarea>
+
+                                    <p
+                                        class="field-message"
+                                        id="address-message"
+                                    ></p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-actions">
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        btn
+                                        btn-kynex-primary
+                                        form-submit
+                                    "
+                                >
+                                    Crear cuenta
+
+                                    <i
+                                        class="bi bi-arrow-right"
+                                    ></i>
+
+                                </button>
+
+
+                                <a
+                                    href="login.html"
+                                    class="btn btn-kynex-secondary"
+                                >
+                                    Ya tengo una cuenta
+                                </a>
+
+                            </div>
+
+
+                            <div
+                                class="form-status"
+                                id="register-status"
+                                role="status"
+                                aria-live="polite"
+                            >
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                        PANEL
+                    =================================================== -->
+
+                    <aside class="form-side-panel">
+
+                        <i class="bi bi-person-plus"></i>
+
+                        <h2>
+                            Únete a KYNEX
+                        </h2>
+
+                        <p>
+                            El perfil permitirá ampliar
+                            progresivamente la experiencia
+                            personalizada de la plataforma.
+                        </p>
+
+
+                        <ul class="form-side-list">
+
+                            <li>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                <span>
+                                    Guarda tus preferencias.
+                                </span>
+
+                            </li>
+
+                            <li>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                <span>
+                                    Accede a funcionalidades
+                                    personalizadas.
+                                </span>
+
+                            </li>
+
+                            <li>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                <span>
+                                    Gestiona futuras compras
+                                    y rutinas.
+                                </span>
+
+                            </li>
+
+                        </ul>
+
+                    </aside>
 
                 </div>
 
@@ -430,6 +838,11 @@
     <script
         src="../../assets/js/app.js"
         defer
+    ></script>
+
+    <script
+        type="module"
+        src="../../assets/js/modules/register.js"
     ></script>
 
 </body>
