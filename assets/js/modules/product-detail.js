@@ -433,26 +433,23 @@ function addProductToCart() {
 
     if (existingProduct) {
 
-        existingProduct.quantity +=
-            quantity;
+        existingProduct.quantity =
+            Math.min(
+                existingProduct.quantity + quantity,
+                product.stock
+            );
 
     } else {
 
-        storedCart.push(
-            {
-                id:
-                    product.id,
-
-                name:
-                    product.name,
-
-                price:
-                    product.price,
-
-                quantity:
-                    quantity
-            }
-        );
+        storedCart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: Math.min(
+                quantity,
+                product.stock
+            )
+        });
 
     }
 

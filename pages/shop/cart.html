@@ -40,6 +40,11 @@
         href="../../assets/css/components.css"
     >
 
+    <link
+        rel="stylesheet"
+        href="../../assets/css/shop.css"
+    >
+
 </head>
 
 
@@ -252,19 +257,187 @@
 
             <div class="container">
 
-                <div class="development-placeholder">
+                <div class="cart-layout">
 
-                    <i class="bi bi-activity"></i>
+                    <!-- ==================================================
+                        PRODUCTOS DEL CARRITO
+                    =================================================== -->
 
-                    <h2>
-                        Tu carrito está listo para ser desarrollado
-                    </h2>
+                    <div class="cart-products">
 
-                    <p>
-                        En una próxima etapa se implementarán
-                        cantidades, eliminación de productos,
-                        subtotal, total y persistencia con LocalStorage.
-                    </p>
+                        <div class="cart-section-heading">
+
+                            <div>
+
+                                <p class="section-eyebrow">
+                                    PRODUCTOS
+                                </p>
+
+                                <h2>
+                                    Tu selección
+                                </h2>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="cart-clear-button"
+                                id="clear-cart"
+                            >
+                                <i class="bi bi-trash"></i>
+
+                                Vaciar carrito
+                            </button>
+
+                        </div>
+
+
+                        <!-- Productos dinámicos -->
+
+                        <div
+                            id="cart-items"
+                            aria-live="polite"
+                        >
+                        </div>
+
+
+                        <!-- Carrito vacío -->
+
+                        <div
+                            class="cart-empty d-none"
+                            id="cart-empty"
+                        >
+
+                            <i class="bi bi-bag"></i>
+
+                            <h2>
+                                Tu carrito está vacío
+                            </h2>
+
+                            <p>
+                                Explora el catálogo y agrega
+                                productos para comenzar tu compra.
+                            </p>
+
+                            <a
+                                href="products.html"
+                                class="btn btn-kynex-primary"
+                            >
+                                Explorar productos
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                        RESUMEN
+                    =================================================== -->
+
+                    <aside
+                        class="cart-summary"
+                        aria-labelledby="summary-title"
+                    >
+
+                        <p class="section-eyebrow">
+                            RESUMEN
+                        </p>
+
+                        <h2 id="summary-title">
+                            Resumen de compra
+                        </h2>
+
+
+                        <div class="cart-summary-row">
+
+                            <span>
+                                Productos
+                            </span>
+
+                            <strong id="summary-items">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="cart-summary-row">
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <strong id="cart-subtotal">
+                                $0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="cart-summary-row">
+
+                            <span>
+                                Despacho estimado
+                            </span>
+
+                            <strong id="cart-shipping">
+                                $0
+                            </strong>
+
+                        </div>
+
+
+                        <hr>
+
+
+                        <div class="cart-summary-total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong id="cart-total">
+                                $0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="shipping-message">
+
+                            <i class="bi bi-truck"></i>
+
+                            <p id="shipping-message">
+                                Agrega productos para calcular
+                                el despacho.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-kynex-primary cart-checkout-button"
+                            id="checkout-button"
+                        >
+                            Continuar compra
+
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+
+
+                        <a
+                            href="products.html"
+                            class="cart-continue-link"
+                        >
+                            <i class="bi bi-arrow-left"></i>
+
+                            Seguir comprando
+                        </a>
+
+                    </aside>
 
                 </div>
 
@@ -431,6 +604,11 @@
     <script
         src="../../assets/js/app.js"
         defer
+    ></script>
+
+   <script
+        type="module"
+        src="../../assets/js/modules/cart.js"
     ></script>
 
 </body>
