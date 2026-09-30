@@ -1,7 +1,5 @@
 "use strict";
 
-console.log("admin-user-form.js cargado correctamente");
-
 import {
     regions
 } from "../data/regions.js";
@@ -184,8 +182,6 @@ function saveUsers(users) {
 ========================================================= */
 
 function populateRegions() {
-
-    console.log("Regiones disponibles:", regions);
 
     regions.forEach(
         region => {
