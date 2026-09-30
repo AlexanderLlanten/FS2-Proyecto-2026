@@ -32,6 +32,11 @@
         href="../../assets/css/components.css"
     >
 
+    <link
+        rel="stylesheet"
+        href="../../assets/css/admin.css"
+    >
+
 </head>
 
 
@@ -60,21 +65,90 @@
         </section>
 
 
-        <section class="section-spacing">
+        <section class="admin-section section-spacing">
 
             <div class="container">
 
-                <div class="development-placeholder">
+                <div class="admin-toolbar">
 
-                    <i class="bi bi-people"></i>
+                    <div>
 
-                    <h2>
-                        Mantenedor de usuarios
-                    </h2>
+                        <p class="section-eyebrow">
+                            GESTIÓN
+                        </p>
 
-                    <p>
-                        En esta sección se implementará el listado, creación y edición de usuarios de la plataforma.
-                    </p>
+                        <h2>
+                            Usuarios registrados
+                        </h2>
+
+                    </div>
+
+
+                    <a
+                        href="user-form.html"
+                        class="btn btn-kynex-primary"
+                    >
+                        <i class="bi bi-person-plus"></i>
+
+                        Crear usuario
+                    </a>
+
+                </div>
+
+
+                <div class="admin-table-wrapper">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    RUN
+                                </th>
+
+                                <th>
+                                    Nombre
+                                </th>
+
+                                <th>
+                                    Correo
+                                </th>
+
+                                <th>
+                                    Región
+                                </th>
+
+                                <th>
+                                    Comuna
+                                </th>
+
+                                <th>
+                                    Rol
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="users-table-body">
+                        </tbody>
+
+                    </table>
+
+
+                    <div
+                        class="admin-empty d-none"
+                        id="users-empty"
+                    >
+                        No hay usuarios registrados.
+                    </div>
 
                 </div>
 
@@ -85,7 +159,7 @@
                         href="../index.html"
                         class="btn btn-kynex-secondary"
                     >
-                        Volver
+                        Volver al panel
                     </a>
 
                 </div>
@@ -100,6 +174,11 @@
     <script
         src="../../assets/js/app.js"
         defer
+    ></script>
+
+    <script
+        type="module"
+        src="../../assets/js/modules/admin-users.js"
     ></script>
 
 </body>

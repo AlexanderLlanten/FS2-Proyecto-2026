@@ -1,0 +1,182 @@
+/* =========================================================
+   KYNEX - ADMIN
+========================================================= */
+
+.admin-section {
+    background-color: var(--color-bg);
+}
+
+.admin-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 28px;
+}
+
+.admin-toolbar h2 {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   TABLA
+--------------------------------------------------------- */
+
+.admin-table-wrapper {
+    overflow-x: auto;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.admin-table {
+    width: 100%;
+
+    min-width: 850px;
+
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 17px 20px;
+
+    text-align: left;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.admin-table thead {
+    background-color: var(--color-surface-light);
+}
+
+.admin-table th {
+    color: var(--color-text);
+
+    font-size: 0.78rem;
+    font-weight: 800;
+
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
+}
+
+.admin-table td {
+    color: var(--color-text-soft);
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   ROLES
+--------------------------------------------------------- */
+
+.role-badge {
+    display: inline-flex;
+
+    padding: 6px 10px;
+
+    background-color: rgba(158, 240, 26, 0.08);
+
+    color: var(--color-primary);
+
+    border: 1px solid rgba(158, 240, 26, 0.18);
+    border-radius: 50px;
+
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+
+/* ---------------------------------------------------------
+   ACCIONES
+--------------------------------------------------------- */
+
+.admin-actions {
+    display: flex;
+
+    gap: 8px;
+}
+
+.admin-action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    background: transparent;
+
+    color: var(--color-text-soft);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    transition:
+        color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.admin-action-button:hover {
+    color: var(--color-primary);
+
+    border-color: var(--color-border-hover);
+}
+
+.admin-action-button.delete:hover {
+    color: var(--color-danger);
+
+    border-color: rgba(255, 90, 101, 0.35);
+}
+
+
+/* ---------------------------------------------------------
+   ESTADO VACÍO
+--------------------------------------------------------- */
+
+.admin-empty {
+    padding: 60px 20px;
+
+    text-align: center;
+
+    color: var(--color-text-soft);
+}
+
+
+/* ---------------------------------------------------------
+   PANEL FORM
+--------------------------------------------------------- */
+
+.admin-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 28px;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 767.98px) {
+
+    .admin-toolbar,
+    .admin-form-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
