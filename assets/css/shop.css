@@ -1,0 +1,367 @@
+/* =========================================================
+   KYNEX - TIENDA
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   TOOLBAR
+--------------------------------------------------------- */
+
+.catalog-toolbar {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    margin-bottom: 22px;
+}
+
+
+/* ---------------------------------------------------------
+   BUSCADOR
+--------------------------------------------------------- */
+
+.catalog-search {
+    position: relative;
+
+    flex: 1;
+}
+
+.catalog-search i {
+    position: absolute;
+
+    top: 50%;
+    left: 18px;
+
+    color: var(--color-text-muted);
+
+    transform: translateY(-50%);
+}
+
+.catalog-search input {
+    width: 100%;
+    height: 52px;
+
+    padding: 0 18px 0 48px;
+
+    background-color: var(--color-surface);
+
+    color: var(--color-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.catalog-search input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.catalog-search input:focus {
+    background-color: var(--color-surface-light);
+
+    border-color: var(--color-primary);
+
+    outline: none;
+}
+
+
+/* ---------------------------------------------------------
+   FILTRO
+--------------------------------------------------------- */
+
+.catalog-filter select {
+    min-width: 220px;
+    height: 52px;
+
+    padding: 0 42px 0 16px;
+
+    background-color: var(--color-surface);
+
+    color: var(--color-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    cursor: pointer;
+}
+
+.catalog-filter select:focus {
+    border-color: var(--color-primary);
+
+    outline: none;
+}
+
+
+/* ---------------------------------------------------------
+   RESULTADOS
+--------------------------------------------------------- */
+
+.catalog-summary {
+    margin-bottom: 28px;
+}
+
+.catalog-summary p {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.9rem;
+}
+
+
+/* ---------------------------------------------------------
+   PRODUCT CARD
+--------------------------------------------------------- */
+
+.shop-product-card {
+    overflow: hidden;
+
+    height: 100%;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    transition:
+        transform var(--transition-normal),
+        border-color var(--transition-normal);
+}
+
+.shop-product-card:hover {
+    border-color: var(--color-border-hover);
+
+    transform: translateY(-5px);
+}
+
+
+/* ---------------------------------------------------------
+   VISUAL
+--------------------------------------------------------- */
+
+.shop-product-visual {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 270px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(158, 240, 26, 0.13),
+            transparent 55%
+        ),
+        var(--color-bg-soft);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.shop-product-visual > i {
+    color: var(--color-primary);
+
+    font-size: 5rem;
+}
+
+.stock-badge {
+    position: absolute;
+
+    top: 18px;
+    left: 18px;
+
+    padding: 6px 10px;
+
+    background-color: rgba(158, 240, 26, 0.1);
+
+    color: var(--color-primary);
+
+    border: 1px solid rgba(158, 240, 26, 0.2);
+    border-radius: 50px;
+
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+
+/* ---------------------------------------------------------
+   BODY
+--------------------------------------------------------- */
+
+.shop-product-body {
+    padding: 26px;
+}
+
+.shop-product-meta {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
+}
+
+.shop-product-meta span {
+    color: var(--color-primary);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+}
+
+.shop-product-meta span:last-child {
+    color: var(--color-text-muted);
+}
+
+.shop-product-body h2 {
+    margin-bottom: 12px;
+
+    font-size: 1.3rem;
+}
+
+.shop-product-body > p {
+    min-height: 78px;
+
+    margin-bottom: 18px;
+}
+
+
+/* ---------------------------------------------------------
+   TAGS
+--------------------------------------------------------- */
+
+.product-tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    min-height: 32px;
+}
+
+.product-tag {
+    padding: 5px 9px;
+
+    background-color: var(--color-bg-soft);
+
+    color: var(--color-text-soft);
+
+    border: 1px solid var(--color-border);
+    border-radius: 50px;
+
+    font-size: 0.7rem;
+}
+
+
+/* ---------------------------------------------------------
+   PRECIO Y ACCIÓN
+--------------------------------------------------------- */
+
+.shop-product-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid var(--color-border);
+}
+
+.shop-product-bottom > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-product-bottom small {
+    margin-bottom: 3px;
+
+    color: var(--color-text-muted);
+}
+
+.shop-product-bottom strong {
+    font-size: 1.2rem;
+}
+
+
+/* ---------------------------------------------------------
+   SIN RESULTADOS
+--------------------------------------------------------- */
+
+.catalog-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 70px 20px;
+
+    text-align: center;
+
+    background-color: var(--color-surface);
+
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.catalog-empty i {
+    margin-bottom: 20px;
+
+    color: var(--color-primary);
+
+    font-size: 3rem;
+}
+
+.catalog-empty h2 {
+    margin-bottom: 10px;
+}
+
+.catalog-empty p {
+    max-width: 500px;
+
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 767.98px) {
+
+    .catalog-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .catalog-filter select {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+    .shop-product-bottom {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .shop-product-bottom .btn {
+        width: 100%;
+    }
+
+}

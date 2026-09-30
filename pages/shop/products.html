@@ -39,6 +39,12 @@
         rel="stylesheet"
         href="../../assets/css/components.css"
     >
+    
+    <link
+        rel="stylesheet"
+        href="../../assets/css/shop.css"
+    >
+
 
 </head>
 
@@ -253,17 +259,111 @@
 
             <div class="container">
 
-                <div class="development-placeholder">
+                <!-- ==================================================
+                    HERRAMIENTAS DEL CATÁLOGO
+                =================================================== -->
 
-                    <i class="bi bi-box-seam"></i>
+                <div class="catalog-toolbar">
+
+                    <div class="catalog-search">
+
+                        <label
+                            for="product-search"
+                            class="visually-hidden"
+                        >
+                            Buscar producto
+                        </label>
+
+                        <i
+                            class="bi bi-search"
+                            aria-hidden="true"
+                        ></i>
+
+                        <input
+                            type="search"
+                            id="product-search"
+                            placeholder="Buscar suplementos..."
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+
+                    <div class="catalog-filter">
+
+                        <label
+                            for="category-filter"
+                            class="visually-hidden"
+                        >
+                            Filtrar por categoría
+                        </label>
+
+                        <select id="category-filter">
+
+                            <option value="all">
+                                Todas las categorías
+                            </option>
+
+                            <option value="Proteínas">
+                                Proteínas
+                            </option>
+
+                            <option value="Creatinas">
+                                Creatinas
+                            </option>
+
+                            <option value="Vitaminas">
+                                Vitaminas
+                            </option>
+
+                            <option value="Pre-entreno">
+                                Pre-entreno
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Resultado -->
+
+                <div class="catalog-summary">
+
+                    <p id="catalog-count">
+                        Cargando productos...
+                    </p>
+
+                </div>
+
+
+                <!-- Catálogo generado con JavaScript -->
+
+                <div
+                    class="row g-4"
+                    id="products-container"
+                    aria-live="polite"
+                >
+                </div>
+
+
+                <!-- Mensaje sin resultados -->
+
+                <div
+                    class="catalog-empty d-none"
+                    id="catalog-empty"
+                >
+
+                    <i class="bi bi-search"></i>
 
                     <h2>
-                        Catálogo en desarrollo
+                        No encontramos productos
                     </h2>
 
                     <p>
-                        En la siguiente etapa se incorporará
-                        el catálogo dinámico de productos.
+                        Intenta utilizar otro término
+                        o seleccionar una categoría diferente.
                     </p>
 
                 </div>
@@ -431,6 +531,11 @@
     <script
         src="../../assets/js/app.js"
         defer
+    ></script>
+
+    <script
+        type="module"
+        src="../../assets/js/modules/product-renderer.js"
     ></script>
 
 </body>
