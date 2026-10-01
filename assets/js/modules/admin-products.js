@@ -1,10 +1,23 @@
 "use strict";
 
+/* =========================================================
+   KYNEX - ADMINISTRACIÓN DE PRODUCTOS
+========================================================= */
+
 import {
     getProducts,
     saveProducts
 } from "./product-storage.js";
 
+
+import {
+    getSession
+} from "./auth.js";
+
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
 
 const tableBody =
     document.getElementById(
@@ -17,6 +30,14 @@ const emptyState =
         "products-empty"
     );
 
+
+const session =
+    getSession();
+
+
+/* =========================================================
+   UTILIDADES
+========================================================= */
 
 function formatPrice(price) {
 
@@ -32,6 +53,24 @@ function formatPrice(price) {
 }
 
 
+/* =========================================================
+   PERMISOS
+========================================================= */
+
+function isAdministrator() {
+
+    return (
+        session?.role ===
+        "Administrador"
+    );
+
+}
+
+
+/* =========================================================
+   CREAR FILA
+========================================================= */
+
 function createProductRow(product) {
 
     const critical =
@@ -43,11 +82,41 @@ function createProductRow(product) {
             product.criticalStock;
 
 
+    const adminActions =
+        isAdministrator()
+            ? `
+                <a
+                    href="product-form.html?id=${product.id}"
+                    class="admin-action-button"
+                    aria-label="Editar ${product.name}"
+                    title="Editar producto"
+                >
+                    <i class="bi bi-pencil"></i>
+                </a>
+
+
+                <button
+                    type="button"
+                    class="
+                        admin-action-button
+                        delete
+                        product-delete
+                    "
+                    data-product-id="${product.id}"
+                    aria-label="Eliminar ${product.name}"
+                    title="Eliminar producto"
+                >
+                    <i class="bi bi-trash"></i>
+                </button>
+            `
+            : "";
+
+
     return `
         <tr>
 
             <td>
-                ${product.code}
+                ${product.code || "-"}
             </td>
 
 
@@ -62,7 +131,9 @@ function createProductRow(product) {
 
 
             <td>
-                ${formatPrice(product.price)}
+                ${formatPrice(
+                    product.price
+                )}
             </td>
 
 
@@ -70,9 +141,11 @@ function createProductRow(product) {
 
                 <span
                     class="
-                        ${critical
-                            ? "stock-critical"
-                            : ""}
+                        ${
+                            critical
+                                ? "stock-critical"
+                                : ""
+                        }
                     "
                 >
                     ${product.stock}
@@ -97,12 +170,12 @@ function createProductRow(product) {
                             <span class="stock-alert">
                                 Stock crítico
                             </span>
-                          `
+                        `
                         : `
                             <span class="role-badge">
                                 Disponible
                             </span>
-                          `
+                        `
                 }
 
             </td>
@@ -113,26 +186,16 @@ function createProductRow(product) {
                 <div class="admin-actions">
 
                     <a
-                        href="product-form.html?id=${product.id}"
+                        href="../../pages/shop/product-detail.html?id=${product.id}"
                         class="admin-action-button"
-                        aria-label="Editar ${product.name}"
+                        aria-label="Ver ${product.name}"
+                        title="Ver detalle"
                     >
-                        <i class="bi bi-pencil"></i>
+                        <i class="bi bi-eye"></i>
                     </a>
 
 
-                    <button
-                        type="button"
-                        class="
-                            admin-action-button
-                            delete
-                            product-delete
-                        "
-                        data-product-id="${product.id}"
-                        aria-label="Eliminar ${product.name}"
-                    >
-                        <i class="bi bi-trash"></i>
-                    </button>
+                    ${adminActions}
 
                 </div>
 
@@ -144,77 +207,129 @@ function createProductRow(product) {
 }
 
 
+/* =========================================================
+   RENDER
+========================================================= */
+
 function renderProducts() {
 
     const products =
         getProducts();
 
 
-    if (products.length === 0) {
+    if (
+        products.length === 0
+    ) {
 
         tableBody.innerHTML =
             "";
 
-        emptyState.classList.remove(
-            "d-none"
-        );
+
+        emptyState
+            .classList.remove(
+                "d-none"
+            );
+
 
         return;
 
     }
 
 
-    emptyState.classList.add(
-        "d-none"
-    );
+    emptyState
+        .classList.add(
+            "d-none"
+        );
 
 
     tableBody.innerHTML =
         products
-            .map(createProductRow)
+            .map(
+                createProductRow
+            )
             .join("");
 
 }
 
 
-function deleteProduct(productId) {
+/* =========================================================
+   ELIMINAR PRODUCTO
+========================================================= */
+
+function deleteProduct(
+    productId
+) {
+
+    /*
+     * Seguridad demostrativa Front End.
+     * Solo el Administrador puede ejecutar
+     * esta operación desde la interfaz.
+     */
+
+    if (
+        !isAdministrator()
+    ) {
+
+        return;
+
+    }
+
 
     const products =
         getProducts();
 
 
-    const updated =
+    const updatedProducts =
         products.filter(
             product =>
-                product.id !== productId
+                product.id !==
+                productId
         );
 
 
-    saveProducts(updated);
+    saveProducts(
+        updatedProducts
+    );
+
 
     renderProducts();
 
 }
 
 
+/* =========================================================
+   EVENT DELEGATION
+========================================================= */
+
 tableBody.addEventListener(
     "click",
     event => {
 
-        const button =
+        const deleteButton =
             event.target.closest(
                 ".product-delete"
             );
 
 
-        if (!button) {
+        if (!deleteButton) {
+
             return;
+
+        }
+
+
+        if (
+            !isAdministrator()
+        ) {
+
+            return;
+
         }
 
 
         const productId =
             Number(
-                button.dataset.productId
+                deleteButton.dataset.productId
             );
 
 
@@ -224,7 +339,9 @@ tableBody.addEventListener(
             );
 
 
-        if (confirmed) {
+        if (
+            confirmed
+        ) {
 
             deleteProduct(
                 productId
@@ -235,5 +352,9 @@ tableBody.addEventListener(
     }
 );
 
+
+/* =========================================================
+   INICIALIZACIÓN
+========================================================= */
 
 renderProducts();

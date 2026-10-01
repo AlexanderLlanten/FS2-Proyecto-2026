@@ -65,11 +65,20 @@
 
             <div class="container">
 
+                <div
+                    id="admin-session"
+                    class="mb-5"
+                >
+                </div>
+
                 <div class="row g-4">
 
                     <!-- PRODUCTOS -->
 
-                    <div class="col-md-6 col-lg-4">
+                    <div    
+                        class="col-md-6 col-lg-4"
+                        data-seller-access
+                    >
 
                         <article class="feature-card">
 
@@ -101,7 +110,10 @@
 
                     <!-- USUARIOS -->
 
-                    <div class="col-md-6 col-lg-4">
+                    <div 
+                        class="col-md-6 col-lg-4"
+                        data-admin-only
+                    >
 
                         <article class="feature-card">
 
@@ -134,7 +146,10 @@
 
                     <!-- PEDIDOS -->
 
-                    <div class="col-md-6 col-lg-4">
+                    <div 
+                        class="col-md-6 col-lg-4"
+                        data-seller-access
+                    >
 
                         <article class="feature-card">
 
@@ -196,6 +211,11 @@
     <script
         src="../assets/js/app.js"
         defer
+    ></script>
+
+    <script
+        type="module"
+        src="../assets/js/modules/admin-auth.js"
     ></script>
 
 </body>

@@ -11,6 +11,12 @@ import {
 } from "./validation.js";
 
 
+import {
+    loginUser,
+    getSession
+} from "./auth.js";
+
+
 /* =========================================================
    ELEMENTOS
 ========================================================= */
@@ -58,7 +64,7 @@ const passwordToggle =
 
 
 /* =========================================================
-   EMAIL
+   VALIDAR EMAIL
 ========================================================= */
 
 function validateEmail() {
@@ -76,12 +82,15 @@ function validateEmail() {
             "El correo electrónico es obligatorio."
         );
 
+
         return false;
 
     }
 
 
-    if (value.length > 100) {
+    if (
+        value.length > 100
+    ) {
 
         showFieldError(
             email,
@@ -89,18 +98,24 @@ function validateEmail() {
             "El correo no puede superar 100 caracteres."
         );
 
+
         return false;
 
     }
 
 
-    if (!isAllowedEmail(value)) {
+    if (
+        !isAllowedEmail(
+            value
+        )
+    ) {
 
         showFieldError(
             email,
             emailMessage,
             "Utiliza un correo @duoc.cl, @profesor.duoc.cl o @gmail.com."
         );
+
 
         return false;
 
@@ -112,13 +127,14 @@ function validateEmail() {
         emailMessage
     );
 
+
     return true;
 
 }
 
 
 /* =========================================================
-   PASSWORD
+   VALIDAR PASSWORD
 ========================================================= */
 
 function validatePassword() {
@@ -134,6 +150,7 @@ function validatePassword() {
             passwordMessage,
             "La contraseña es obligatoria."
         );
+
 
         return false;
 
@@ -152,6 +169,7 @@ function validatePassword() {
             "La contraseña debe contener entre 4 y 10 caracteres."
         );
 
+
         return false;
 
     }
@@ -161,6 +179,7 @@ function validatePassword() {
         password,
         passwordMessage
     );
+
 
     return true;
 
@@ -226,6 +245,50 @@ password.addEventListener(
 
 
 /* =========================================================
+   REDIRECCIÓN POR ROL
+========================================================= */
+
+function redirectByRole(
+    role
+) {
+
+    switch (role) {
+
+        case "Administrador":
+
+            window.location.href =
+                "../../admin/index.html";
+
+            break;
+
+
+        case "Vendedor":
+
+            window.location.href =
+                "../../admin/index.html";
+
+            break;
+
+
+        case "Cliente":
+
+            window.location.href =
+                "../shop/products.html";
+
+            break;
+
+
+        default:
+
+            window.location.href =
+                "../../index.html";
+
+    }
+
+}
+
+
+/* =========================================================
    SUBMIT
 ========================================================= */
 
@@ -240,26 +303,53 @@ form.addEventListener(
             "form-status";
 
 
-        const isEmailValid =
+        const emailValid =
             validateEmail();
 
 
-        const isPasswordValid =
+        const passwordValid =
             validatePassword();
 
 
         if (
-            !isEmailValid
+            !emailValid
             ||
-            !isPasswordValid
+            !passwordValid
         ) {
 
             statusElement.textContent =
                 "Revisa los campos marcados antes de continuar.";
 
+
             statusElement.classList.add(
                 "error"
             );
+
+
+            return;
+
+        }
+
+
+        const result =
+            loginUser(
+                email.value,
+                password.value
+            );
+
+
+        if (
+            !result.success
+        ) {
+
+            statusElement.textContent =
+                result.message;
+
+
+            statusElement.classList.add(
+                "error"
+            );
+
 
             return;
 
@@ -267,11 +357,46 @@ form.addEventListener(
 
 
         statusElement.textContent =
-            "Credenciales validadas correctamente.";
+            `Bienvenido, ${result.session.firstName}. Perfil: ${result.session.role}.`;
+
 
         statusElement.classList.add(
             "success"
         );
 
+
+        window.setTimeout(
+            () => {
+
+                redirectByRole(
+                    result.session.role
+                );
+
+            },
+            700
+        );
+
     }
 );
+
+
+/* =========================================================
+   SESIÓN YA INICIADA
+========================================================= */
+
+const currentSession =
+    getSession();
+
+
+if (
+    currentSession
+) {
+
+    statusElement.textContent =
+        `Actualmente existe una sesión iniciada como ${currentSession.firstName} (${currentSession.role}).`;
+
+
+    statusElement.className =
+        "form-status success";
+
+}

@@ -17,6 +17,8 @@ export const defaultUsers = [
 
         email: "camila@gmail.com",
 
+        password: "1234",
+
         birthDate: "1998-06-12",
 
         region:
@@ -43,6 +45,8 @@ export const defaultUsers = [
         lastName: "Rojas Díaz",
 
         email: "martin@duoc.cl",
+
+        password: "1234",
 
         birthDate: null,
 
@@ -72,7 +76,11 @@ export const defaultUsers = [
         email:
             "admin@profesor.duoc.cl",
 
-        birthDate: null,
+        password:
+            "1234",
+
+        birthDate:
+            null,
 
         region:
             "Región Metropolitana de Santiago",

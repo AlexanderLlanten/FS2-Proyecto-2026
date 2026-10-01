@@ -18,6 +18,19 @@ import {
 } from "./validation.js";
 
 
+import {
+    getUsers
+} from "./auth.js";
+
+
+/* =========================================================
+   CONFIGURACIÓN
+========================================================= */
+
+const USERS_KEY =
+    "kynex_users";
+
+
 /* =========================================================
    FORMULARIO
 ========================================================= */
@@ -31,7 +44,9 @@ const form =
 const fields = {
 
     run:
-        document.getElementById("run"),
+        document.getElementById(
+            "run"
+        ),
 
     firstName:
         document.getElementById(
@@ -118,6 +133,22 @@ const statusElement =
 
 
 /* =========================================================
+   GUARDAR USUARIOS
+========================================================= */
+
+function saveUsers(users) {
+
+    localStorage.setItem(
+        USERS_KEY,
+        JSON.stringify(
+            users
+        )
+    );
+
+}
+
+
+/* =========================================================
    REGIONES
 ========================================================= */
 
@@ -135,6 +166,7 @@ function populateRegions() {
             option.value =
                 region.name;
 
+
             option.textContent =
                 region.name;
 
@@ -148,6 +180,10 @@ function populateRegions() {
 
 }
 
+
+/* =========================================================
+   COMUNAS
+========================================================= */
 
 function populateCommunes() {
 
@@ -189,6 +225,7 @@ function populateCommunes() {
             option.value =
                 commune;
 
+
             option.textContent =
                 commune;
 
@@ -208,7 +245,7 @@ function populateCommunes() {
 
 
 /* =========================================================
-   VALIDACIONES
+   RUN
 ========================================================= */
 
 function validateRun() {
@@ -253,7 +290,11 @@ function validateRun() {
     }
 
 
-    if (!isValidRun(value)) {
+    if (
+        !isValidRun(
+            value
+        )
+    ) {
 
         showFieldError(
             fields.run,
@@ -266,20 +307,51 @@ function validateRun() {
     }
 
 
+    const duplicated =
+        getUsers().some(
+            user =>
+                cleanRun(
+                    user.run || ""
+                ) ===
+                value
+        );
+
+
+    if (
+        duplicated
+    ) {
+
+        showFieldError(
+            fields.run,
+            messages.run,
+            "Ya existe un usuario registrado con este RUN."
+        );
+
+        return false;
+
+    }
+
+
     showFieldSuccess(
         fields.run,
         messages.run
     );
+
 
     return true;
 
 }
 
 
+/* =========================================================
+   NOMBRE
+========================================================= */
+
 function validateFirstName() {
 
     const value =
-        fields.firstName.value.trim();
+        fields.firstName.value
+            .trim();
 
 
     if (!value) {
@@ -295,7 +367,9 @@ function validateFirstName() {
     }
 
 
-    if (value.length > 50) {
+    if (
+        value.length > 50
+    ) {
 
         showFieldError(
             fields.firstName,
@@ -313,15 +387,21 @@ function validateFirstName() {
         messages.firstName
     );
 
+
     return true;
 
 }
 
 
+/* =========================================================
+   APELLIDOS
+========================================================= */
+
 function validateLastName() {
 
     const value =
-        fields.lastName.value.trim();
+        fields.lastName.value
+            .trim();
 
 
     if (!value) {
@@ -337,7 +417,9 @@ function validateLastName() {
     }
 
 
-    if (value.length > 100) {
+    if (
+        value.length > 100
+    ) {
 
         showFieldError(
             fields.lastName,
@@ -355,15 +437,22 @@ function validateLastName() {
         messages.lastName
     );
 
+
     return true;
 
 }
 
 
+/* =========================================================
+   CORREO
+========================================================= */
+
 function validateEmail() {
 
     const value =
-        fields.email.value.trim();
+        fields.email.value
+            .trim()
+            .toLowerCase();
 
 
     if (!value) {
@@ -379,7 +468,9 @@ function validateEmail() {
     }
 
 
-    if (value.length > 100) {
+    if (
+        value.length > 100
+    ) {
 
         showFieldError(
             fields.email,
@@ -392,7 +483,11 @@ function validateEmail() {
     }
 
 
-    if (!isAllowedEmail(value)) {
+    if (
+        !isAllowedEmail(
+            value
+        )
+    ) {
 
         showFieldError(
             fields.email,
@@ -405,19 +500,51 @@ function validateEmail() {
     }
 
 
+    const duplicated =
+        getUsers().some(
+            user =>
+                user.email
+                    ?.toLowerCase()
+                ===
+                value
+        );
+
+
+    if (
+        duplicated
+    ) {
+
+        showFieldError(
+            fields.email,
+            messages.email,
+            "Ya existe un usuario registrado con este correo."
+        );
+
+        return false;
+
+    }
+
+
     showFieldSuccess(
         fields.email,
         messages.email
     );
+
 
     return true;
 
 }
 
 
+/* =========================================================
+   REGIÓN
+========================================================= */
+
 function validateRegion() {
 
-    if (!fields.region.value) {
+    if (
+        !fields.region.value
+    ) {
 
         showFieldError(
             fields.region,
@@ -435,14 +562,21 @@ function validateRegion() {
         messages.region
     );
 
+
     return true;
 
 }
 
 
+/* =========================================================
+   COMUNA
+========================================================= */
+
 function validateCommune() {
 
-    if (!fields.commune.value) {
+    if (
+        !fields.commune.value
+    ) {
 
         showFieldError(
             fields.commune,
@@ -460,15 +594,21 @@ function validateCommune() {
         messages.commune
     );
 
+
     return true;
 
 }
 
 
+/* =========================================================
+   DIRECCIÓN
+========================================================= */
+
 function validateAddress() {
 
     const value =
-        fields.address.value.trim();
+        fields.address.value
+            .trim();
 
 
     if (!value) {
@@ -484,7 +624,9 @@ function validateAddress() {
     }
 
 
-    if (value.length > 300) {
+    if (
+        value.length > 300
+    ) {
 
         showFieldError(
             fields.address,
@@ -502,13 +644,14 @@ function validateAddress() {
         messages.address
     );
 
+
     return true;
 
 }
 
 
 /* =========================================================
-   VALIDACIÓN COMPLETA
+   FORMULARIO COMPLETO
 ========================================================= */
 
 function validateForm() {
@@ -532,13 +675,94 @@ function validateForm() {
     ];
 
 
-    return results.every(Boolean);
+    return results.every(
+        Boolean
+    );
 
 }
 
 
 /* =========================================================
-   EVENTOS EN TIEMPO REAL
+   CREAR USUARIO
+========================================================= */
+
+function createUser() {
+
+    const users =
+        getUsers();
+
+
+    const user = {
+
+        id:
+            Date.now(),
+
+        run:
+            cleanRun(
+                fields.run.value
+            ),
+
+        firstName:
+            fields.firstName.value
+                .trim(),
+
+        lastName:
+            fields.lastName.value
+                .trim(),
+
+        email:
+            fields.email.value
+                .trim()
+                .toLowerCase(),
+
+        /*
+         * Contraseña demostrativa.
+         *
+         * El formulario solicitado por el encargo
+         * no incluye contraseña en el registro.
+         */
+
+        password:
+            "1234",
+
+        birthDate:
+            fields.birthDate.value
+            ||
+            null,
+
+        region:
+            fields.region.value,
+
+        commune:
+            fields.commune.value,
+
+        address:
+            fields.address.value
+                .trim(),
+
+        role:
+            "Cliente"
+
+    };
+
+
+    users.push(
+        user
+    );
+
+
+    saveUsers(
+        users
+    );
+
+
+    return user;
+
+}
+
+
+/* =========================================================
+   EVENTOS
 ========================================================= */
 
 fields.run.addEventListener(
@@ -604,72 +828,49 @@ form.addEventListener(
             "form-status";
 
 
-        if (!validateForm()) {
+        if (
+            !validateForm()
+        ) {
 
             statusElement.textContent =
                 "Revisa los campos marcados antes de continuar.";
 
+
             statusElement.classList.add(
                 "error"
             );
+
 
             return;
 
         }
 
 
-        const user = {
-
-            run:
-                cleanRun(
-                    fields.run.value
-                ),
-
-            firstName:
-                fields.firstName.value
-                    .trim(),
-
-            lastName:
-                fields.lastName.value
-                    .trim(),
-
-            email:
-                fields.email.value
-                    .trim()
-                    .toLowerCase(),
-
-            birthDate:
-                fields.birthDate.value
-                || null,
-
-            region:
-                fields.region.value,
-
-            commune:
-                fields.commune.value,
-
-            address:
-                fields.address.value
-                    .trim(),
-
-            role:
-                "Cliente"
-
-        };
-
-
-        console.log(
-            "Usuario validado:",
-            user
-        );
+        createUser();
 
 
         statusElement.textContent =
-            "Los datos fueron validados correctamente.";
+            "Usuario registrado correctamente. Para esta demostración, la contraseña inicial es 1234.";
+
 
         statusElement.classList.add(
             "success"
         );
+
+
+        form.reset();
+
+
+        fields.commune.innerHTML =
+            `
+                <option value="">
+                    Selecciona primero una región
+                </option>
+            `;
+
+
+        fields.commune.disabled =
+            true;
 
     }
 );
