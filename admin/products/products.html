@@ -32,6 +32,12 @@
         href="../../assets/css/components.css"
     >
 
+    <link
+        rel="stylesheet"
+        href="../../assets/css/admin.css"
+    >    
+
+
 </head>
 
 
@@ -39,22 +45,98 @@
 
     <main>
 
-        <section class="page-header">
+        <section class="admin-section section-spacing">
 
             <div class="container">
 
-                <p class="section-eyebrow">
-                    KYNEX ADMIN
-                </p>
+                <div class="admin-toolbar">
 
-                <h1>
-                    Productos
-                </h1>
+                    <div>
 
-                <p>
-                    Administración del catálogo
-                    de productos KYNEX.
-                </p>
+                        <p class="section-eyebrow">
+                            INVENTARIO
+                        </p>
+
+                        <h2>
+                            Productos registrados
+                        </h2>
+
+                    </div>
+
+
+                    <a
+                        href="product-form.html"
+                        class="btn btn-kynex-primary"
+                    >
+
+                        <i class="bi bi-plus-lg"></i>
+
+                        Nuevo producto
+
+                    </a>
+
+                </div>
+
+
+                <div class="admin-table-wrapper">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Código</th>
+
+                                <th>Producto</th>
+
+                                <th>Categoría</th>
+
+                                <th>Precio</th>
+
+                                <th>Stock</th>
+
+                                <th>Stock crítico</th>
+
+                                <th>Estado</th>
+
+                                <th>Acciones</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="products-table-body">
+                        </tbody>
+
+                    </table>
+
+
+                    <div
+                        class="admin-empty d-none"
+                        id="products-empty"
+                    >
+                        No hay productos registrados.
+                    </div>
+
+                </div>
+
+
+                <div class="mt-4">
+
+                    <a
+                        href="../index.html"
+                        class="btn btn-kynex-secondary"
+                    >
+
+                        <i class="bi bi-arrow-left"></i>
+
+                        Volver al panel
+
+                    </a>
+
+                </div>
 
             </div>
 
@@ -102,6 +184,11 @@
     <script
         src="../../assets/js/app.js"
         defer
+    ></script>
+
+    <script
+        type="module"
+        src="../../assets/js/modules/admin-products.js"
     ></script>
 
 </body>

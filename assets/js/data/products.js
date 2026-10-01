@@ -21,6 +21,10 @@ export const products = [
 
         stock: 18,
 
+        code: "KYN001",
+        
+        criticalStock: 5,
+
         featured: true,
 
         format: "2 lb",
@@ -113,6 +117,10 @@ export const products = [
 
         stock: 25,
 
+        code: "KYN002",
+
+        criticalStock: 5,
+
         featured: true,
 
         format: "300 g",
@@ -200,6 +208,10 @@ export const products = [
         price: 26990,
 
         stock: 12,
+
+        code: "KYN003",
+
+        criticalStock: 5,
 
         featured: true,
 
@@ -290,6 +302,10 @@ export const products = [
 
         stock: 30,
 
+        code: "KYN004",
+
+        criticalStock: 5,
+        
         featured: false,
 
         format: "60 cápsulas",
@@ -375,6 +391,10 @@ export const products = [
 
         stock: 15,
 
+        code: "KYN005",
+
+        criticalStock: 5,
+        
         featured: false,
 
         format: "1.5 lb",
@@ -464,6 +484,10 @@ export const products = [
         price: 15990,
 
         stock: 22,
+
+        code: "KYN006",
+        
+        criticalStock: 5,
 
         featured: false,
 

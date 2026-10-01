@@ -166,6 +166,79 @@
     margin-bottom: 28px;
 }
 
+.stock-critical {
+    color: var(--color-danger);
+
+    font-weight: 800;
+}
+
+.stock-alert {
+    display: inline-flex;
+
+    padding: 6px 10px;
+
+    background-color:
+        rgba(255, 90, 101, 0.08);
+
+    color:
+        var(--color-danger);
+
+    border:
+        1px solid
+        rgba(255, 90, 101, 0.25);
+
+    border-radius: 50px;
+
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+
+/* ---------------------------------------------------------
+   ALERTA STOCK CRÍTICO
+--------------------------------------------------------- */
+
+.product-stock-warning {
+    display: flex;
+
+    gap: 14px;
+
+    margin-top: 28px;
+
+    padding: 18px;
+
+    background-color:
+        rgba(255, 90, 101, 0.08);
+
+    color:
+        var(--color-danger);
+
+    border:
+        1px solid
+        rgba(255, 90, 101, 0.25);
+
+    border-radius:
+        var(--radius-sm);
+}
+
+.product-stock-warning > i {
+    flex: 0 0 auto;
+
+    font-size: 1.3rem;
+}
+
+.product-stock-warning strong {
+    display: block;
+
+    margin-bottom: 4px;
+}
+
+.product-stock-warning p {
+    margin: 0;
+
+    color: var(--color-text-soft);
+}
+
 
 /* ---------------------------------------------------------
    RESPONSIVE
