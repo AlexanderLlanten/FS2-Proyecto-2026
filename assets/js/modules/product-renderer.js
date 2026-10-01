@@ -4,7 +4,17 @@
    KYNEX - RENDERIZADO DEL CATÁLOGO
 ========================================================= */
 
-import { products } from "../data/products.js";
+import {
+    getProducts
+} from "./product-storage.js";
+
+
+/* =========================================================
+   DATOS
+========================================================= */
+
+let products =
+    getProducts();
 
 
 /* =========================================================
@@ -12,36 +22,48 @@ import { products } from "../data/products.js";
 ========================================================= */
 
 const productsContainer =
-    document.getElementById("products-container");
+    document.getElementById(
+        "products-container"
+    );
 
 const searchInput =
-    document.getElementById("product-search");
+    document.getElementById(
+        "product-search"
+    );
 
 const categoryFilter =
-    document.getElementById("category-filter");
+    document.getElementById(
+        "category-filter"
+    );
 
 const catalogCount =
-    document.getElementById("catalog-count");
+    document.getElementById(
+        "catalog-count"
+    );
 
 const emptyState =
-    document.getElementById("catalog-empty");
+    document.getElementById(
+        "catalog-empty"
+    );
 
 
 /* =========================================================
    FORMATEO
 ========================================================= */
 
-/**
- * Convierte un número a formato de moneda chilena.
- */
 function formatPrice(price) {
 
     return new Intl.NumberFormat(
         "es-CL",
         {
-            style: "currency",
-            currency: "CLP",
-            maximumFractionDigits: 0
+            style:
+                "currency",
+
+            currency:
+                "CLP",
+
+            maximumFractionDigits:
+                0
         }
     ).format(price);
 
@@ -49,22 +71,43 @@ function formatPrice(price) {
 
 
 /* =========================================================
-   CREACIÓN DE TARJETA
+   TARJETA
 ========================================================= */
 
-/**
- * Genera el HTML correspondiente a una tarjeta de producto.
- */
 function createProductCard(product) {
 
     const goals =
-        product.goals
-            .slice(0, 2)
-            .map(
-                goal =>
-                    `<span class="product-tag">${goal}</span>`
-            )
-            .join("");
+        Array.isArray(product.goals)
+            ? product.goals
+                .slice(0, 2)
+                .map(
+                    goal =>
+                        `
+                            <span class="product-tag">
+                                ${goal}
+                            </span>
+                        `
+                )
+                .join("")
+            : "";
+
+
+    const description =
+        product.description
+        ||
+        "Producto disponible en KYNEX.";
+
+
+    const format =
+        product.format
+        ||
+        "Sin especificar";
+
+
+    const icon =
+        product.icon
+        ||
+        "bi-box-seam";
 
 
     return `
@@ -75,13 +118,18 @@ function createProductCard(product) {
                 <div class="shop-product-visual">
 
                     <span class="stock-badge">
-                        ${product.stock > 0
-                            ? "Disponible"
-                            : "Sin stock"}
+
+                        ${
+                            product.stock > 0
+                                ? "Disponible"
+                                : "Sin stock"
+                        }
+
                     </span>
 
+
                     <i
-                        class="bi ${product.icon}"
+                        class="bi ${icon}"
                         aria-hidden="true"
                     ></i>
 
@@ -97,7 +145,7 @@ function createProductCard(product) {
                         </span>
 
                         <span>
-                            ${product.format}
+                            ${format}
                         </span>
 
                     </div>
@@ -109,7 +157,7 @@ function createProductCard(product) {
 
 
                     <p>
-                        ${product.description}
+                        ${description}
                     </p>
 
 
@@ -157,9 +205,6 @@ function createProductCard(product) {
    RENDER
 ========================================================= */
 
-/**
- * Renderiza el listado recibido.
- */
 function renderProducts(productList) {
 
     if (!productsContainer) {
@@ -173,13 +218,15 @@ function renderProducts(productList) {
             .join("");
 
 
-    updateCatalogState(productList);
+    updateCatalogState(
+        productList
+    );
 
 }
 
 
 /* =========================================================
-   ESTADO DEL CATÁLOGO
+   ESTADO CATÁLOGO
 ========================================================= */
 
 function updateCatalogState(productList) {
@@ -216,6 +263,10 @@ function updateCatalogState(productList) {
 
 function applyFilters() {
 
+    products =
+        getProducts();
+
+
     const searchTerm =
         searchInput
             ? searchInput.value
@@ -234,24 +285,44 @@ function applyFilters() {
         products.filter(
             product => {
 
-                const matchesSearch =
+                const name =
                     product.name
-                        .toLowerCase()
-                        .includes(searchTerm)
-                    ||
+                        ?.toLowerCase()
+                    || "";
+
+
+                const description =
                     product.description
-                        .toLowerCase()
-                        .includes(searchTerm)
-                    ||
+                        ?.toLowerCase()
+                    || "";
+
+
+                const category =
                     product.category
-                        .toLowerCase()
-                        .includes(searchTerm);
+                        ?.toLowerCase()
+                    || "";
+
+
+                const matchesSearch =
+                    name.includes(
+                        searchTerm
+                    )
+                    ||
+                    description.includes(
+                        searchTerm
+                    )
+                    ||
+                    category.includes(
+                        searchTerm
+                    );
 
 
                 const matchesCategory =
-                    selectedCategory === "all"
+                    selectedCategory ===
+                        "all"
                     ||
-                    product.category === selectedCategory;
+                    product.category ===
+                        selectedCategory;
 
 
                 return (
@@ -264,7 +335,9 @@ function applyFilters() {
         );
 
 
-    renderProducts(filteredProducts);
+    renderProducts(
+        filteredProducts
+    );
 
 }
 
@@ -297,4 +370,6 @@ if (categoryFilter) {
    INICIALIZACIÓN
 ========================================================= */
 
-renderProducts(products);
+renderProducts(
+    products
+);

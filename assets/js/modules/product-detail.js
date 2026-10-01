@@ -4,7 +4,9 @@
    KYNEX - DETALLE DE PRODUCTO
 ========================================================= */
 
-import { products } from "../data/products.js";
+import {
+    getProductById
+} from "./product-storage.js";
 
 
 /* =========================================================
@@ -12,14 +14,20 @@ import { products } from "../data/products.js";
 ========================================================= */
 
 const params =
-    new URLSearchParams(window.location.search);
+    new URLSearchParams(
+        window.location.search
+    );
+
 
 const productId =
-    Number(params.get("id"));
+    Number(
+        params.get("id")
+    );
+
 
 const product =
-    products.find(
-        item => item.id === productId
+    getProductById(
+        productId
     );
 
 
@@ -28,16 +36,27 @@ const product =
 ========================================================= */
 
 const detailContainer =
-    document.getElementById("product-detail-container");
+    document.getElementById(
+        "product-detail-container"
+    );
+
 
 const informationContainer =
-    document.getElementById("product-information");
+    document.getElementById(
+        "product-information"
+    );
+
 
 const notFoundContainer =
-    document.getElementById("product-not-found");
+    document.getElementById(
+        "product-not-found"
+    );
+
 
 const breadcrumbProduct =
-    document.getElementById("breadcrumb-product");
+    document.getElementById(
+        "breadcrumb-product"
+    );
 
 
 /* =========================================================
@@ -60,9 +79,25 @@ function formatPrice(price) {
 
 function createList(items) {
 
+    if (
+        !Array.isArray(items)
+        ||
+        items.length === 0
+    ) {
+
+        return `
+            <li>
+                No especificado
+            </li>
+        `;
+
+    }
+
+
     return items
         .map(
-            item => `<li>${item}</li>`
+            item =>
+                `<li>${item}</li>`
         )
         .join("");
 
@@ -75,20 +110,40 @@ function createList(items) {
 
 function showProductNotFound() {
 
-    detailContainer?.classList.add("d-none");
+    detailContainer
+        ?.classList.add(
+            "d-none"
+        );
 
-    informationContainer?.classList.add("d-none");
+
+    informationContainer
+        ?.classList.add(
+            "d-none"
+        );
+
 
     document
-        .querySelector(".nutrition-section")
-        ?.classList.add("d-none");
+        .querySelector(
+            ".nutrition-section"
+        )
+        ?.classList.add(
+            "d-none"
+        );
+
 
     document
-        .querySelector(".product-safety")
-        ?.classList.add("d-none");
+        .querySelector(
+            ".product-safety"
+        )
+        ?.classList.add(
+            "d-none"
+        );
+
 
     notFoundContainer
-        ?.classList.remove("d-none");
+        ?.classList.remove(
+            "d-none"
+        );
 
 }
 
@@ -103,68 +158,105 @@ function renderProduct(product) {
         `${product.name} | KYNEX`;
 
 
-    breadcrumbProduct.textContent =
-        product.name;
+    if (breadcrumbProduct) {
 
+        breadcrumbProduct.textContent =
+            product.name;
+
+    }
+
+
+    /* =====================================================
+       DATOS BÁSICOS
+    ===================================================== */
 
     document.getElementById(
         "product-category"
     ).textContent =
-        product.category;
+        product.category
+        ||
+        "Sin categoría";
 
 
     document.getElementById(
         "product-brand"
     ).textContent =
-        product.brand;
+        product.brand
+        ||
+        "KYNEX Nutrition";
 
 
     document.getElementById(
         "product-name"
     ).textContent =
-        product.name;
+        product.name
+        ||
+        "Producto";
 
 
     document.getElementById(
         "product-description"
     ).textContent =
-        product.description;
+        product.description
+        ||
+        "Sin descripción disponible.";
 
 
     document.getElementById(
         "product-price"
     ).textContent =
-        formatPrice(product.price);
+        formatPrice(
+            Number(product.price) || 0
+        );
 
 
     document.getElementById(
         "product-format"
     ).textContent =
-        product.format;
+        product.format
+        ||
+        "Sin especificar";
 
 
     document.getElementById(
         "product-flavor"
     ).textContent =
-        product.flavor;
+        product.flavor
+        ||
+        "Sin especificar";
 
 
     document.getElementById(
         "product-stock"
     ).textContent =
-        `${product.stock} unidades disponibles`;
+        `${Number(product.stock) || 0} unidades disponibles`;
 
 
-    /* ICONO */
+    /* =====================================================
+       ICONO
+    ===================================================== */
 
     const icon =
-        document.getElementById("product-icon");
+        document.getElementById(
+            "product-icon"
+        );
 
-    icon.className =
-        `bi ${product.icon}`;
+
+    if (icon) {
+
+        icon.className =
+            `bi ${
+                product.icon
+                ||
+                "bi-box-seam"
+            }`;
+
+    }
 
 
-    /* STOCK */
+    /* =====================================================
+       STOCK
+    ===================================================== */
 
     const stockBadge =
         document.getElementById(
@@ -172,38 +264,79 @@ function renderProduct(product) {
         );
 
 
-    if (product.stock > 0) {
+    const addButton =
+        document.getElementById(
+            "add-to-cart"
+        );
+
+
+    if (
+        Number(product.stock) > 0
+    ) {
 
         stockBadge.textContent =
             "Disponible";
+
+
+        if (addButton) {
+
+            addButton.disabled =
+                false;
+
+        }
 
     } else {
 
         stockBadge.textContent =
             "Sin stock";
 
-        document.getElementById(
-            "add-to-cart"
-        ).disabled =
-            true;
+
+        if (addButton) {
+
+            addButton.disabled =
+                true;
+
+        }
 
     }
 
 
-    /* OBJETIVOS */
+    /* =====================================================
+       OBJETIVOS
+    ===================================================== */
+
+    const goals =
+        Array.isArray(
+            product.goals
+        )
+            ? product.goals
+            : [];
+
 
     document.getElementById(
         "product-tags"
     ).innerHTML =
-        product.goals
-            .map(
-                goal =>
-                    `<span class="product-tag">${goal}</span>`
-            )
-            .join("");
+        goals.length > 0
+            ? goals
+                .map(
+                    goal =>
+                        `
+                            <span class="product-tag">
+                                ${goal}
+                            </span>
+                        `
+                )
+                .join("")
+            : `
+                <span class="product-tag">
+                    Sin objetivo definido
+                </span>
+            `;
 
 
-    /* BENEFICIOS */
+    /* =====================================================
+       BENEFICIOS
+    ===================================================== */
 
     document.getElementById(
         "product-benefits"
@@ -213,7 +346,9 @@ function renderProduct(product) {
         );
 
 
-    /* INGREDIENTES */
+    /* =====================================================
+       INGREDIENTES
+    ===================================================== */
 
     document.getElementById(
         "product-ingredients"
@@ -223,7 +358,9 @@ function renderProduct(product) {
         );
 
 
-    /* ALÉRGENOS */
+    /* =====================================================
+       ALÉRGENOS
+    ===================================================== */
 
     const allergens =
         document.getElementById(
@@ -231,13 +368,22 @@ function renderProduct(product) {
         );
 
 
-    if (product.allergens.length === 0) {
+    const productAllergens =
+        Array.isArray(
+            product.allergens
+        )
+            ? product.allergens
+            : [];
+
+
+    if (
+        productAllergens.length === 0
+    ) {
 
         allergens.innerHTML =
             `
                 <p class="allergen-safe">
-                    No se informan alérgenos
-                    en los datos demostrativos.
+                    No se informan alérgenos.
                 </p>
             `;
 
@@ -246,90 +392,154 @@ function renderProduct(product) {
         allergens.innerHTML =
             `
                 <ul>
-                    ${createList(product.allergens)}
+                    ${createList(
+                        productAllergens
+                    )}
                 </ul>
             `;
 
     }
 
 
-    /* USO */
+    /* =====================================================
+       USO
+    ===================================================== */
+
+    const usage =
+        product.usage
+        &&
+        typeof product.usage ===
+            "object"
+            ? product.usage
+            : {};
+
 
     document.getElementById(
         "product-serving"
     ).textContent =
-        product.usage.serving;
+        usage.serving
+        ||
+        "No especificado";
 
 
     document.getElementById(
         "product-preparation"
     ).textContent =
-        product.usage.preparation;
+        usage.preparation
+        ||
+        "No especificado";
 
 
     document.getElementById(
         "product-moment"
     ).textContent =
-        product.usage.moment;
+        usage.moment
+        ||
+        "No especificado";
 
 
-    /* NUTRICIÓN */
+    /* =====================================================
+       NUTRICIÓN
+    ===================================================== */
+
+    const nutrition =
+        product.nutrition
+        &&
+        typeof product.nutrition ===
+            "object"
+            ? product.nutrition
+            : {};
+
 
     document.getElementById(
         "nutrition-serving"
     ).textContent =
-        product.nutrition.servingSize;
+        nutrition.servingSize
+        ||
+        "No especificado";
 
 
     document.getElementById(
         "nutrition-calories"
     ).textContent =
-        `${product.nutrition.calories} kcal`;
+        nutrition.calories !== undefined
+        &&
+        nutrition.calories !== null
+            ? `${nutrition.calories} kcal`
+            : "No especificado";
 
 
     document.getElementById(
         "nutrition-protein"
     ).textContent =
-        product.nutrition.protein;
+        nutrition.protein
+        ||
+        "No especificado";
 
 
     document.getElementById(
         "nutrition-carbohydrates"
     ).textContent =
-        product.nutrition.carbohydrates;
+        nutrition.carbohydrates
+        ||
+        "No especificado";
 
 
     document.getElementById(
         "nutrition-fats"
     ).textContent =
-        product.nutrition.fats;
+        nutrition.fats
+        ||
+        "No especificado";
 
 
-    /* CERTIFICACIONES */
+    /* =====================================================
+       CERTIFICACIONES
+    ===================================================== */
+
+    const certifications =
+        Array.isArray(
+            product.certifications
+        )
+            ? product.certifications
+            : [];
+
 
     document.getElementById(
         "product-certifications"
     ).innerHTML =
-        product.certifications
-            .map(
-                certification =>
-                    `
-                        <span class="certification-badge">
-                            <i class="bi bi-patch-check"></i>
+        certifications.length > 0
+            ? certifications
+                .map(
+                    certification =>
+                        `
+                            <span class="certification-badge">
 
-                            ${certification}
-                        </span>
-                    `
-            )
-            .join("");
+                                <i class="bi bi-patch-check"></i>
+
+                                ${certification}
+
+                            </span>
+                        `
+                )
+                .join("")
+            : `
+                <span class="certification-badge">
+                    Sin certificaciones registradas
+                </span>
+            `;
 
 
-    /* ADVERTENCIA */
+    /* =====================================================
+       ADVERTENCIA
+    ===================================================== */
 
     document.getElementById(
         "product-warning"
     ).textContent =
-        product.warning;
+        product.warning
+        ||
+        "Producto demostrativo. Revisar indicaciones antes de utilizar.";
 
 }
 
@@ -345,10 +555,12 @@ function initializeQuantity() {
             "product-quantity"
         );
 
+
     const minus =
         document.getElementById(
             "quantity-minus"
         );
+
 
     const plus =
         document.getElementById(
@@ -356,14 +568,36 @@ function initializeQuantity() {
         );
 
 
+    if (
+        !input
+        ||
+        !minus
+        ||
+        !plus
+    ) {
+
+        return;
+
+    }
+
+
+    input.value =
+        1;
+
+
     minus.addEventListener(
         "click",
         () => {
 
             const value =
-                Number(input.value);
+                Number(
+                    input.value
+                );
 
-            if (value > 1) {
+
+            if (
+                value > 1
+            ) {
 
                 input.value =
                     value - 1;
@@ -379,16 +613,23 @@ function initializeQuantity() {
         () => {
 
             const value =
-                Number(input.value);
+                Number(
+                    input.value
+                );
+
 
             const maximum =
                 Math.min(
-                    product.stock,
+                    Number(
+                        product.stock
+                    ) || 0,
                     10
                 );
 
 
-            if (value < maximum) {
+            if (
+                value < maximum
+            ) {
 
                 input.value =
                     value + 1;
@@ -402,24 +643,35 @@ function initializeQuantity() {
 
 
 /* =========================================================
-   CARRITO
+   LOCAL STORAGE - CARRITO
 ========================================================= */
 
 function getStoredCart() {
 
     const storedCart =
-        localStorage.getItem("kynex_cart");
+        localStorage.getItem(
+            "kynex_cart"
+        );
+
 
     if (!storedCart) {
+
         return [];
+
     }
+
 
     try {
 
         const cart =
-            JSON.parse(storedCart);
+            JSON.parse(
+                storedCart
+            );
 
-        return Array.isArray(cart)
+
+        return Array.isArray(
+            cart
+        )
             ? cart
             : [];
 
@@ -430,12 +682,17 @@ function getStoredCart() {
             error
         );
 
+
         return [];
 
     }
 
 }
 
+
+/* =========================================================
+   AGREGAR AL CARRITO
+========================================================= */
 
 function addProductToCart() {
 
@@ -454,29 +711,58 @@ function addProductToCart() {
     const existingProduct =
         storedCart.find(
             item =>
-                item.id === product.id
+                item.id ===
+                product.id
         );
 
 
-    if (existingProduct) {
+    const availableStock =
+        Number(
+            product.stock
+        ) || 0;
+
+
+    if (
+        availableStock <= 0
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        existingProduct
+    ) {
 
         existingProduct.quantity =
             Math.min(
-                existingProduct.quantity + quantity,
-                product.stock
+                existingProduct.quantity
+                +
+                quantity,
+                availableStock
             );
 
     } else {
 
-        storedCart.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            quantity: Math.min(
-                quantity,
-                product.stock
-            )
-        });
+        storedCart.push(
+            {
+                id:
+                    product.id,
+
+                name:
+                    product.name,
+
+                price:
+                    product.price,
+
+                quantity:
+                    Math.min(
+                        quantity,
+                        availableStock
+                    )
+            }
+        );
 
     }
 
@@ -489,7 +775,9 @@ function addProductToCart() {
     );
 
 
-    showCartFeedback(quantity);
+    showCartFeedback(
+        quantity
+    );
 
 
     updateNavbarCartCounter();
@@ -501,12 +789,21 @@ function addProductToCart() {
    FEEDBACK
 ========================================================= */
 
-function showCartFeedback(quantity) {
+function showCartFeedback(
+    quantity
+) {
 
     const feedback =
         document.getElementById(
             "cart-feedback"
         );
+
+
+    if (!feedback) {
+
+        return;
+
+    }
 
 
     feedback.textContent =
@@ -518,7 +815,7 @@ function showCartFeedback(quantity) {
 
 
 /* =========================================================
-   CONTADOR DEL NAVBAR
+   CONTADOR NAVBAR
 ========================================================= */
 
 function updateNavbarCartCounter() {
@@ -529,19 +826,25 @@ function updateNavbarCartCounter() {
         );
 
 
+    if (!counter) {
+
+        return;
+
+    }
+
+
     const cart =
-        JSON.parse(
-            localStorage.getItem(
-                "kynex_cart"
-            )
-            || "[]"
-        );
+        getStoredCart();
 
 
     const total =
         cart.reduce(
             (sum, item) =>
-                sum + item.quantity,
+                sum
+                +
+                Number(
+                    item.quantity
+                ),
             0
         );
 
@@ -568,16 +871,27 @@ if (!product) {
 
 } else {
 
-    renderProduct(product);
+    renderProduct(
+        product
+    );
+
 
     initializeQuantity();
 
 
-    document.getElementById(
-        "add-to-cart"
-    ).addEventListener(
-        "click",
-        addProductToCart
-    );
+    const addToCartButton =
+        document.getElementById(
+            "add-to-cart"
+        );
+
+
+    if (addToCartButton) {
+
+        addToCartButton.addEventListener(
+            "click",
+            addProductToCart
+        );
+
+    }
 
 }
