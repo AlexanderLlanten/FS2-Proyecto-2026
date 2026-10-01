@@ -1,5 +1,9 @@
 "use strict";
 
+/* =========================================================
+   KYNEX - FORMULARIO ADMINISTRATIVO DE USUARIOS
+========================================================= */
+
 import {
     regions
 } from "../data/regions.js";
@@ -14,9 +18,22 @@ import {
 } from "./validation.js";
 
 
+import {
+    getUsers
+} from "./auth.js";
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
 const USERS_KEY =
     "kynex_users";
 
+
+/* =========================================================
+   PARÁMETROS URL
+========================================================= */
 
 const params =
     new URLSearchParams(
@@ -29,6 +46,18 @@ const editingId =
         params.get("id")
     );
 
+
+const isEditing =
+    Number.isInteger(
+        editingId
+    )
+    &&
+    editingId > 0;
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
 
 const form =
     document.getElementById(
@@ -138,40 +167,42 @@ const statusElement =
 
 
 /* =========================================================
-   STORAGE
+   GUARDAR USUARIOS
 ========================================================= */
-
-function getUsers() {
-
-    try {
-
-        const users =
-            JSON.parse(
-                localStorage.getItem(
-                    USERS_KEY
-                )
-                || "[]"
-            );
-
-
-        return Array.isArray(users)
-            ? users
-            : [];
-
-    } catch (error) {
-
-        return [];
-
-    }
-
-}
-
 
 function saveUsers(users) {
 
     localStorage.setItem(
         USERS_KEY,
-        JSON.stringify(users)
+        JSON.stringify(
+            users
+        )
+    );
+
+}
+
+
+/* =========================================================
+   USUARIO ACTUAL
+========================================================= */
+
+function getEditingUser() {
+
+    if (!isEditing) {
+
+        return null;
+
+    }
+
+
+    return (
+        getUsers().find(
+            user =>
+                user.id ===
+                editingId
+        )
+        ||
+        null
     );
 
 }
@@ -195,6 +226,7 @@ function populateRegions() {
             option.value =
                 region.name;
 
+
             option.textContent =
                 region.name;
 
@@ -209,6 +241,10 @@ function populateRegions() {
 }
 
 
+/* =========================================================
+   COMUNAS
+========================================================= */
+
 function populateCommunes(
     regionName,
     selectedCommune = ""
@@ -217,7 +253,8 @@ function populateCommunes(
     const region =
         regions.find(
             item =>
-                item.name === regionName
+                item.name ===
+                regionName
         );
 
 
@@ -251,6 +288,7 @@ function populateCommunes(
             option.value =
                 commune;
 
+
             option.textContent =
                 commune;
 
@@ -281,7 +319,7 @@ function populateCommunes(
 
 
 /* =========================================================
-   VALIDACIONES
+   VALIDAR RUN
 ========================================================= */
 
 function validateRun() {
@@ -296,16 +334,75 @@ function validateRun() {
         value;
 
 
+    if (!value) {
+
+        showFieldError(
+            fields.run,
+            messages.run,
+            "El RUN es obligatorio."
+        );
+
+        return false;
+
+    }
+
+
     if (
-        !value
+        value.length < 7
         ||
-        !isValidRun(value)
+        value.length > 9
     ) {
 
         showFieldError(
             fields.run,
             messages.run,
-            "Ingresa un RUN válido."
+            "El RUN debe tener entre 7 y 9 caracteres."
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        !isValidRun(
+            value
+        )
+    ) {
+
+        showFieldError(
+            fields.run,
+            messages.run,
+            "Ingresa un RUN válido, sin puntos ni guion."
+        );
+
+        return false;
+
+    }
+
+
+    const duplicated =
+        getUsers().some(
+            user =>
+                cleanRun(
+                    user.run || ""
+                )
+                ===
+                value
+                &&
+                user.id !==
+                    editingId
+        );
+
+
+    if (
+        duplicated
+    ) {
+
+        showFieldError(
+            fields.run,
+            messages.run,
+            "Ya existe un usuario registrado con este RUN."
         );
 
         return false;
@@ -318,10 +415,15 @@ function validateRun() {
         messages.run
     );
 
+
     return true;
 
 }
 
+
+/* =========================================================
+   VALIDAR NOMBRE
+========================================================= */
 
 function validateFirstName() {
 
@@ -343,15 +445,35 @@ function validateFirstName() {
     }
 
 
+    if (
+        value.length > 50
+    ) {
+
+        showFieldError(
+            fields.firstName,
+            messages.firstName,
+            "El nombre no puede superar los 50 caracteres."
+        );
+
+        return false;
+
+    }
+
+
     showFieldSuccess(
         fields.firstName,
         messages.firstName
     );
 
+
     return true;
 
 }
 
+
+/* =========================================================
+   VALIDAR APELLIDOS
+========================================================= */
 
 function validateLastName() {
 
@@ -373,33 +495,115 @@ function validateLastName() {
     }
 
 
+    if (
+        value.length > 100
+    ) {
+
+        showFieldError(
+            fields.lastName,
+            messages.lastName,
+            "Los apellidos no pueden superar los 100 caracteres."
+        );
+
+        return false;
+
+    }
+
+
     showFieldSuccess(
         fields.lastName,
         messages.lastName
     );
+
 
     return true;
 
 }
 
 
+/* =========================================================
+   VALIDAR CORREO
+========================================================= */
+
 function validateEmail() {
 
     const value =
         fields.email.value
-            .trim();
+            .trim()
+            .toLowerCase();
+
+
+    fields.email.value =
+        value;
+
+
+    if (!value) {
+
+        showFieldError(
+            fields.email,
+            messages.email,
+            "El correo electrónico es obligatorio."
+        );
+
+        return false;
+
+    }
 
 
     if (
-        !value
-        ||
-        !isAllowedEmail(value)
+        value.length > 100
     ) {
 
         showFieldError(
             fields.email,
             messages.email,
-            "Ingresa un correo válido de los dominios permitidos."
+            "El correo no puede superar los 100 caracteres."
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        !isAllowedEmail(
+            value
+        )
+    ) {
+
+        showFieldError(
+            fields.email,
+            messages.email,
+            "Utiliza un correo @duoc.cl, @profesor.duoc.cl o @gmail.com."
+        );
+
+        return false;
+
+    }
+
+
+    const duplicated =
+        getUsers().some(
+            user =>
+                user.email
+                    ?.trim()
+                    .toLowerCase()
+                ===
+                value
+                &&
+                user.id !==
+                    editingId
+        );
+
+
+    if (
+        duplicated
+    ) {
+
+        showFieldError(
+            fields.email,
+            messages.email,
+            "Ya existe un usuario registrado con este correo."
         );
 
         return false;
@@ -412,19 +616,35 @@ function validateEmail() {
         messages.email
     );
 
+
     return true;
 
 }
 
 
+/* =========================================================
+   VALIDAR ROL
+========================================================= */
+
 function validateRole() {
 
-    if (!fields.role.value) {
+    const allowedRoles = [
+        "Administrador",
+        "Cliente",
+        "Vendedor"
+    ];
+
+
+    if (
+        !allowedRoles.includes(
+            fields.role.value
+        )
+    ) {
 
         showFieldError(
             fields.role,
             messages.role,
-            "Selecciona un tipo de usuario."
+            "Selecciona un tipo de usuario válido."
         );
 
         return false;
@@ -437,19 +657,32 @@ function validateRole() {
         messages.role
     );
 
+
     return true;
 
 }
 
 
+/* =========================================================
+   VALIDAR REGIÓN
+========================================================= */
+
 function validateRegion() {
 
-    if (!fields.region.value) {
+    const exists =
+        regions.some(
+            region =>
+                region.name ===
+                fields.region.value
+        );
+
+
+    if (!exists) {
 
         showFieldError(
             fields.region,
             messages.region,
-            "Selecciona una región."
+            "Selecciona una región válida."
         );
 
         return false;
@@ -462,19 +695,42 @@ function validateRegion() {
         messages.region
     );
 
+
     return true;
 
 }
 
 
+/* =========================================================
+   VALIDAR COMUNA
+========================================================= */
+
 function validateCommune() {
 
-    if (!fields.commune.value) {
+    const region =
+        regions.find(
+            item =>
+                item.name ===
+                fields.region.value
+        );
+
+
+    const validCommune =
+        region
+        &&
+        region.communes.includes(
+            fields.commune.value
+        );
+
+
+    if (
+        !validCommune
+    ) {
 
         showFieldError(
             fields.commune,
             messages.commune,
-            "Selecciona una comuna."
+            "Selecciona una comuna válida."
         );
 
         return false;
@@ -487,10 +743,15 @@ function validateCommune() {
         messages.commune
     );
 
+
     return true;
 
 }
 
+
+/* =========================================================
+   VALIDAR DIRECCIÓN
+========================================================= */
 
 function validateAddress() {
 
@@ -512,12 +773,62 @@ function validateAddress() {
     }
 
 
+    if (
+        value.length > 300
+    ) {
+
+        showFieldError(
+            fields.address,
+            messages.address,
+            "La dirección no puede superar los 300 caracteres."
+        );
+
+        return false;
+
+    }
+
+
     showFieldSuccess(
         fields.address,
         messages.address
     );
 
+
     return true;
+
+}
+
+
+/* =========================================================
+   VALIDAR FORMULARIO COMPLETO
+========================================================= */
+
+function validateForm() {
+
+    const validations = [
+
+        validateRun(),
+
+        validateFirstName(),
+
+        validateLastName(),
+
+        validateEmail(),
+
+        validateRole(),
+
+        validateRegion(),
+
+        validateCommune(),
+
+        validateAddress()
+
+    ];
+
+
+    return validations.every(
+        Boolean
+    );
 
 }
 
@@ -528,20 +839,28 @@ function validateAddress() {
 
 function loadUser() {
 
-    if (!editingId) {
+    if (!isEditing) {
+
         return;
+
     }
 
 
     const user =
-        getUsers().find(
-            item =>
-                item.id === editingId
-        );
+        getEditingUser();
 
 
     if (!user) {
+
+        statusElement.className =
+            "form-status error";
+
+
+        statusElement.textContent =
+            "No fue posible encontrar el usuario solicitado.";
+
         return;
+
     }
 
 
@@ -552,35 +871,249 @@ function loadUser() {
 
 
     fields.run.value =
-        user.run;
+        user.run || "";
+
 
     fields.firstName.value =
-        user.firstName;
+        user.firstName || "";
+
 
     fields.lastName.value =
-        user.lastName;
+        user.lastName || "";
+
 
     fields.email.value =
-        user.email;
+        user.email || "";
+
 
     fields.birthDate.value =
         user.birthDate || "";
 
+
     fields.role.value =
-        user.role;
+        user.role || "";
+
 
     fields.region.value =
-        user.region;
+        user.region || "";
+
 
     populateCommunes(
         user.region,
         user.commune
     );
 
+
     fields.address.value =
-        user.address;
+        user.address || "";
 
 }
+
+
+/* =========================================================
+   CONSTRUIR USUARIO
+========================================================= */
+
+function buildUserData() {
+
+    const currentUser =
+        getEditingUser();
+
+
+    return {
+
+        id:
+            isEditing
+                ? editingId
+                : Date.now(),
+
+        run:
+            cleanRun(
+                fields.run.value
+            ),
+
+        firstName:
+            fields.firstName.value
+                .trim(),
+
+        lastName:
+            fields.lastName.value
+                .trim(),
+
+        email:
+            fields.email.value
+                .trim()
+                .toLowerCase(),
+
+        password:
+            currentUser?.password
+            ||
+            "1234",
+
+        birthDate:
+            fields.birthDate.value
+            ||
+            null,
+
+        region:
+            fields.region.value,
+
+        commune:
+            fields.commune.value,
+
+        address:
+            fields.address.value
+                .trim(),
+
+        role:
+            fields.role.value
+
+    };
+
+}
+
+
+/* =========================================================
+   GUARDAR
+========================================================= */
+
+function saveUser() {
+
+    const users =
+        getUsers();
+
+
+    const userData =
+        buildUserData();
+
+
+    if (
+        isEditing
+    ) {
+
+        const index =
+            users.findIndex(
+                user =>
+                    user.id ===
+                    editingId
+            );
+
+
+        if (
+            index === -1
+        ) {
+
+            statusElement.className =
+                "form-status error";
+
+
+            statusElement.textContent =
+                "No fue posible encontrar el usuario que se intenta editar.";
+
+            return;
+
+        }
+
+
+        users[index] =
+            userData;
+
+    } else {
+
+        users.push(
+            userData
+        );
+
+    }
+
+
+    saveUsers(
+        users
+    );
+
+
+    statusElement.className =
+        "form-status success";
+
+
+    statusElement.textContent =
+        isEditing
+            ? "Usuario actualizado correctamente."
+            : "Usuario creado correctamente.";
+
+
+    window.setTimeout(
+        () => {
+
+            window.location.href =
+                "users.html";
+
+        },
+        700
+    );
+
+}
+
+
+/* =========================================================
+   EVENTOS
+========================================================= */
+
+fields.run.addEventListener(
+    "blur",
+    validateRun
+);
+
+
+fields.firstName.addEventListener(
+    "blur",
+    validateFirstName
+);
+
+
+fields.lastName.addEventListener(
+    "blur",
+    validateLastName
+);
+
+
+fields.email.addEventListener(
+    "blur",
+    validateEmail
+);
+
+
+fields.role.addEventListener(
+    "change",
+    validateRole
+);
+
+
+fields.region.addEventListener(
+    "change",
+    () => {
+
+        populateCommunes(
+            fields.region.value
+        );
+
+
+        validateRegion();
+
+    }
+);
+
+
+fields.commune.addEventListener(
+    "change",
+    validateCommune
+);
+
+
+fields.address.addEventListener(
+    "blur",
+    validateAddress
+);
 
 
 /* =========================================================
@@ -594,172 +1127,34 @@ form.addEventListener(
         event.preventDefault();
 
 
-        const validations = [
+        statusElement.className =
+            "form-status";
 
-            validateRun(),
-            validateFirstName(),
-            validateLastName(),
-            validateEmail(),
-            validateRole(),
-            validateRegion(),
-            validateCommune(),
-            validateAddress()
 
-        ];
+        statusElement.textContent =
+            "";
 
 
         if (
-            !validations.every(Boolean)
+            !validateForm()
         ) {
 
             statusElement.className =
                 "form-status error";
 
+
             statusElement.textContent =
-                "Revisa los campos marcados.";
+                "Revisa los campos marcados antes de guardar el usuario.";
+
 
             return;
 
         }
 
 
-        const users =
-            getUsers();
-
-
-        const userData = {
-
-            id:
-                editingId
-                ||
-                Date.now(),
-
-            run:
-                fields.run.value,
-
-            firstName:
-                fields.firstName.value
-                    .trim(),
-
-            lastName:
-                fields.lastName.value
-                    .trim(),
-
-            email:
-                fields.email.value
-                    .trim()
-                    .toLowerCase(),
-
-            birthDate:
-                fields.birthDate.value
-                || null,
-
-            role:
-                fields.role.value,
-
-            region:
-                fields.region.value,
-
-            commune:
-                fields.commune.value,
-
-            address:
-                fields.address.value
-                    .trim()
-
-        };
-
-
-        if (editingId) {
-
-            const index =
-                users.findIndex(
-                    user =>
-                        user.id ===
-                        editingId
-                );
-
-
-            if (index !== -1) {
-
-                users[index] =
-                    userData;
-
-            }
-
-        } else {
-
-            users.push(
-                userData
-            );
-
-        }
-
-
-        saveUsers(users);
-
-
-        statusElement.className =
-            "form-status success";
-
-        statusElement.textContent =
-            "Usuario guardado correctamente.";
+        saveUser();
 
     }
-);
-
-
-/* =========================================================
-   EVENTOS
-========================================================= */
-
-fields.region.addEventListener(
-    "change",
-    () => {
-
-        populateCommunes(
-            fields.region.value
-        );
-
-        validateRegion();
-
-    }
-);
-
-
-fields.run.addEventListener(
-    "blur",
-    validateRun
-);
-
-fields.firstName.addEventListener(
-    "blur",
-    validateFirstName
-);
-
-fields.lastName.addEventListener(
-    "blur",
-    validateLastName
-);
-
-fields.email.addEventListener(
-    "blur",
-    validateEmail
-);
-
-fields.role.addEventListener(
-    "change",
-    validateRole
-);
-
-fields.commune.addEventListener(
-    "change",
-    validateCommune
-);
-
-fields.address.addEventListener(
-    "blur",
-    validateAddress
 );
 
 
