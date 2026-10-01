@@ -9,6 +9,11 @@ import {
 } from "./product-storage.js";
 
 
+import {
+    getProductImage
+} from "./image-config.js";
+
+
 /* =========================================================
    DATOS
 ========================================================= */
@@ -18,7 +23,7 @@ let products =
 
 
 /* =========================================================
-   ELEMENTOS DEL DOM
+   DOM
 ========================================================= */
 
 const productsContainer =
@@ -26,20 +31,24 @@ const productsContainer =
         "products-container"
     );
 
+
 const searchInput =
     document.getElementById(
         "product-search"
     );
+
 
 const categoryFilter =
     document.getElementById(
         "category-filter"
     );
 
+
 const catalogCount =
     document.getElementById(
         "catalog-count"
     );
+
 
 const emptyState =
     document.getElementById(
@@ -48,10 +57,12 @@ const emptyState =
 
 
 /* =========================================================
-   FORMATEO
+   PRECIO
 ========================================================= */
 
-function formatPrice(price) {
+function formatPrice(
+    price
+) {
 
     return new Intl.NumberFormat(
         "es-CL",
@@ -65,7 +76,57 @@ function formatPrice(price) {
             maximumFractionDigits:
                 0
         }
-    ).format(price);
+    ).format(
+        Number(price) || 0
+    );
+
+}
+
+
+/* =========================================================
+   IMAGEN
+========================================================= */
+
+function createProductVisual(
+    product
+) {
+
+    const image =
+        getProductImage(
+            product
+        );
+
+
+    if (image) {
+
+        return `
+            <img
+                src="${image}"
+                alt="${product.name}"
+                class="shop-product-image"
+                loading="lazy"
+            >
+        `;
+
+    }
+
+
+    const icon =
+        product.icon
+        ||
+        "bi-box-seam";
+
+
+    return `
+        <div class="shop-product-fallback">
+
+            <i
+                class="bi ${icon}"
+                aria-hidden="true"
+            ></i>
+
+        </div>
+    `;
 
 }
 
@@ -74,12 +135,19 @@ function formatPrice(price) {
    TARJETA
 ========================================================= */
 
-function createProductCard(product) {
+function createProductCard(
+    product
+) {
 
     const goals =
-        Array.isArray(product.goals)
+        Array.isArray(
+            product.goals
+        )
             ? product.goals
-                .slice(0, 2)
+                .slice(
+                    0,
+                    2
+                )
                 .map(
                     goal =>
                         `
@@ -104,12 +172,6 @@ function createProductCard(product) {
         "Sin especificar";
 
 
-    const icon =
-        product.icon
-        ||
-        "bi-box-seam";
-
-
     return `
         <div class="col-md-6 col-xl-4">
 
@@ -117,10 +179,23 @@ function createProductCard(product) {
 
                 <div class="shop-product-visual">
 
-                    <span class="stock-badge">
+                    <span
+                        class="
+                            stock-badge
+                            ${
+                                Number(
+                                    product.stock
+                                ) <= 0
+                                    ? "out-of-stock"
+                                    : ""
+                            }
+                        "
+                    >
 
                         ${
-                            product.stock > 0
+                            Number(
+                                product.stock
+                            ) > 0
                                 ? "Disponible"
                                 : "Sin stock"
                         }
@@ -128,10 +203,9 @@ function createProductCard(product) {
                     </span>
 
 
-                    <i
-                        class="bi ${icon}"
-                        aria-hidden="true"
-                    ></i>
+                    ${createProductVisual(
+                        product
+                    )}
 
                 </div>
 
@@ -162,7 +236,9 @@ function createProductCard(product) {
 
 
                     <div class="product-tags">
+
                         ${goals}
+
                     </div>
 
 
@@ -175,7 +251,9 @@ function createProductCard(product) {
                             </small>
 
                             <strong>
-                                ${formatPrice(product.price)}
+                                ${formatPrice(
+                                    product.price
+                                )}
                             </strong>
 
                         </div>
@@ -186,7 +264,9 @@ function createProductCard(product) {
                             class="btn btn-kynex-primary"
                             aria-label="Ver ${product.name}"
                         >
+
                             Ver producto
+
                         </a>
 
                     </div>
@@ -202,40 +282,20 @@ function createProductCard(product) {
 
 
 /* =========================================================
-   RENDER
-========================================================= */
-
-function renderProducts(productList) {
-
-    if (!productsContainer) {
-        return;
-    }
-
-
-    productsContainer.innerHTML =
-        productList
-            .map(createProductCard)
-            .join("");
-
-
-    updateCatalogState(
-        productList
-    );
-
-}
-
-
-/* =========================================================
    ESTADO CATÁLOGO
 ========================================================= */
 
-function updateCatalogState(productList) {
+function updateCatalogState(
+    productList
+) {
 
     const quantity =
         productList.length;
 
 
-    if (catalogCount) {
+    if (
+        catalogCount
+    ) {
 
         catalogCount.textContent =
             quantity === 1
@@ -245,7 +305,9 @@ function updateCatalogState(productList) {
     }
 
 
-    if (emptyState) {
+    if (
+        emptyState
+    ) {
 
         emptyState.classList.toggle(
             "d-none",
@@ -253,6 +315,38 @@ function updateCatalogState(productList) {
         );
 
     }
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderProducts(
+    productList
+) {
+
+    if (
+        !productsContainer
+    ) {
+
+        return;
+
+    }
+
+
+    productsContainer.innerHTML =
+        productList
+            .map(
+                createProductCard
+            )
+            .join("");
+
+
+    updateCatalogState(
+        productList
+    );
 
 }
 
@@ -288,19 +382,29 @@ function applyFilters() {
                 const name =
                     product.name
                         ?.toLowerCase()
-                    || "";
+                    ||
+                    "";
 
 
                 const description =
                     product.description
                         ?.toLowerCase()
-                    || "";
+                    ||
+                    "";
 
 
                 const category =
                     product.category
                         ?.toLowerCase()
-                    || "";
+                    ||
+                    "";
+
+
+                const code =
+                    product.code
+                        ?.toLowerCase()
+                    ||
+                    "";
 
 
                 const matchesSearch =
@@ -313,6 +417,10 @@ function applyFilters() {
                     )
                     ||
                     category.includes(
+                        searchTerm
+                    )
+                    ||
+                    code.includes(
                         searchTerm
                     );
 
@@ -346,7 +454,9 @@ function applyFilters() {
    EVENTOS
 ========================================================= */
 
-if (searchInput) {
+if (
+    searchInput
+) {
 
     searchInput.addEventListener(
         "input",
@@ -356,7 +466,9 @@ if (searchInput) {
 }
 
 
-if (categoryFilter) {
+if (
+    categoryFilter
+) {
 
     categoryFilter.addEventListener(
         "change",

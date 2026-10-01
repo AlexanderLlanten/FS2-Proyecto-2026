@@ -8,6 +8,10 @@ import {
     getProductById
 } from "./product-storage.js";
 
+import {
+    getProductImage
+} from "./image-config.js";
+
 
 /* =========================================================
    OBTENER PRODUCTO DESDE URL
@@ -233,8 +237,20 @@ function renderProduct(product) {
 
 
     /* =====================================================
-       ICONO
+    IMAGEN
     ===================================================== */
+
+    const productImage =
+        document.getElementById(
+            "product-image"
+        );
+
+
+    const imageFallback =
+        document.getElementById(
+            "product-image-fallback"
+        );
+
 
     const icon =
         document.getElementById(
@@ -242,14 +258,77 @@ function renderProduct(product) {
         );
 
 
-    if (icon) {
+    const imageUrl =
+        getProductImage(
+            product
+        );
 
-        icon.className =
-            `bi ${
-                product.icon
-                ||
-                "bi-box-seam"
-            }`;
+
+    if (
+        imageUrl
+    ) {
+
+        productImage.src =
+            imageUrl;
+
+
+        productImage.alt =
+            `${product.name} - ${product.brand || "KYNEX"}`;
+
+
+        productImage.classList.remove(
+            "d-none"
+        );
+
+
+        imageFallback.classList.add(
+            "d-none"
+        );
+
+
+        /*
+        * En caso de ruta rota,
+        * vuelve al icono.
+        */
+
+        productImage.onerror =
+            () => {
+
+                productImage.classList.add(
+                    "d-none"
+                );
+
+
+                imageFallback.classList.remove(
+                    "d-none"
+                );
+
+            };
+
+    } else {
+
+        productImage.classList.add(
+            "d-none"
+        );
+
+
+        imageFallback.classList.remove(
+            "d-none"
+        );
+
+
+        if (
+            icon
+        ) {
+
+            icon.className =
+                `bi ${
+                    product.icon
+                    ||
+                    "bi-box-seam"
+                }`;
+
+        }
 
     }
 

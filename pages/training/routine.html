@@ -12,32 +12,39 @@
 
     <meta
         name="description"
-        content="Catálogo de suplementos deportivos KYNEX."
+        content="Rutina personalizada KYNEX almacenada localmente en el navegador."
     >
 
     <title>Mi rutina | KYNEX</title>
 
-    <!-- Bootstrap -->
+
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
-    <!-- Bootstrap Icons -->
+
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
     >
 
-    <!-- CSS KYNEX -->
+
     <link
         rel="stylesheet"
         href="../../assets/css/main.css"
     >
 
+
     <link
         rel="stylesheet"
         href="../../assets/css/components.css"
+    >
+
+
+    <link
+        rel="stylesheet"
+        href="../../assets/css/training.css"
     >
 
 </head>
@@ -45,7 +52,6 @@
 
 <body>
 
-    <!-- Accesibilidad -->
     <a
         class="skip-link"
         href="#main-content"
@@ -53,10 +59,6 @@
         Ir al contenido principal
     </a>
 
-
-    <!-- ==================================================
-         HEADER
-    =================================================== -->
 
     <header class="site-header">
 
@@ -67,7 +69,6 @@
 
             <div class="container">
 
-                <!-- Logo -->
                 <a
                     class="navbar-brand brand-logo"
                     href="../../index.html"
@@ -76,7 +77,6 @@
                 </a>
 
 
-                <!-- Menú móvil -->
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -90,7 +90,6 @@
                 </button>
 
 
-                <!-- Navegación -->
                 <div
                     class="collapse navbar-collapse"
                     id="mainNavbar"
@@ -113,8 +112,7 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link active"
-                                aria-current="page"
+                                class="nav-link"
                                 href="../shop/products.html"
                             >
                                 Tienda
@@ -126,8 +124,9 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link"
-                                href="../training/training.html"
+                                class="nav-link active"
+                                aria-current="page"
+                                href="training.html"
                             >
                                 Entrenamiento
                             </a>
@@ -173,7 +172,6 @@
                     </ul>
 
 
-                    <!-- Cuenta y carrito -->
                     <div class="navbar-actions">
 
                         <a
@@ -181,12 +179,7 @@
                             href="../account/login.html"
                             aria-label="Iniciar sesión"
                         >
-
-                            <i
-                                class="bi bi-person"
-                                aria-hidden="true"
-                            ></i>
-
+                            <i class="bi bi-person"></i>
                         </a>
 
 
@@ -196,10 +189,7 @@
                             aria-label="Ver carrito"
                         >
 
-                            <i
-                                class="bi bi-bag"
-                                aria-hidden="true"
-                            ></i>
+                            <i class="bi bi-bag"></i>
 
                             <span
                                 class="cart-counter"
@@ -221,10 +211,6 @@
     </header>
 
 
-    <!-- ==================================================
-         CONTENIDO PRINCIPAL
-    =================================================== -->
-
     <main id="main-content">
 
         <section class="page-header">
@@ -240,8 +226,8 @@
                 </h1>
 
                 <p>
-                    Organiza ejercicios, series y repeticiones
-                    dentro de una rutina personalizada.
+                    Organiza tus ejercicios, series y repeticiones.
+                    La información se guarda localmente en tu navegador.
                 </p>
 
             </div>
@@ -253,18 +239,103 @@
 
             <div class="container">
 
-                <div class="development-placeholder">
+                <div class="routine-summary">
+
+                    <div class="routine-summary-item">
+
+                        <strong
+                            id="routine-exercise-count"
+                        >
+                            0
+                        </strong>
+
+                        <span>
+                            Ejercicios
+                        </span>
+
+                    </div>
+
+
+                    <div class="routine-summary-item">
+
+                        <strong
+                            id="routine-total-sets"
+                        >
+                            0
+                        </strong>
+
+                        <span>
+                            Series totales
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <a
+                            href="training.html"
+                            class="btn btn-kynex-primary"
+                        >
+
+                            <i class="bi bi-plus-lg"></i>
+
+                            Agregar ejercicios
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="routine-list"
+                    id="routine-container"
+                >
+                </div>
+
+
+                <div
+                    class="training-empty d-none"
+                    id="routine-empty"
+                >
 
                     <i class="bi bi-clipboard2-pulse"></i>
 
                     <h2>
-                        Constructor de rutinas
+                        Tu rutina está vacía
                     </h2>
 
                     <p>
-                        Próximamente esta vista permitirá añadir
-                        ejercicios y almacenar rutinas localmente.
+                        Agrega ejercicios desde la biblioteca
+                        de entrenamiento.
                     </p>
+
+
+                    <a
+                        href="training.html"
+                        class="btn btn-kynex-primary"
+                    >
+                        Explorar ejercicios
+                    </a>
+
+                </div>
+
+
+                <div class="mt-4">
+
+                    <button
+                        type="button"
+                        class="btn btn-kynex-secondary d-none"
+                        id="clear-routine"
+                    >
+
+                        <i class="bi bi-trash"></i>
+
+                        Vaciar rutina
+
+                    </button>
 
                 </div>
 
@@ -275,133 +346,9 @@
     </main>
 
 
-    <!-- ==================================================
-         FOOTER
-    =================================================== -->
-
     <footer class="site-footer">
 
         <div class="container">
-
-            <div class="row gy-5">
-
-                <div class="col-lg-5">
-
-                    <a
-                        href="../../index.html"
-                        class="footer-brand"
-                    >
-                        KYNEX
-                    </a>
-
-                    <p class="footer-description">
-                        Plataforma deportiva orientada a
-                        suplementación, entrenamiento y rendimiento.
-                    </p>
-
-                </div>
-
-
-                <div class="col-6 col-lg-2">
-
-                    <h2 class="footer-title">
-                        KYNEX
-                    </h2>
-
-                    <ul class="footer-links">
-
-                        <li>
-                            <a href="../information/about.html">
-                                Nosotros
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="../information/blog.html">
-                                Blog
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="../information/contact.html">
-                                Contacto
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-                <div class="col-6 col-lg-2">
-
-                    <h2 class="footer-title">
-                        Explorar
-                    </h2>
-
-                    <ul class="footer-links">
-
-                        <li>
-                            <a href="../shop/products.html">
-                                Tienda
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="../training/training.html">
-                                Entrenamiento
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="../account/login.html">
-                                Mi cuenta
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-                <div class="col-lg-3">
-
-                    <h2 class="footer-title">
-                        Comunidad
-                    </h2>
-
-                    <div class="social-links">
-
-                        <a
-                            href="#"
-                            aria-label="Instagram"
-                        >
-                            <i class="bi bi-instagram"></i>
-                        </a>
-
-                        <a
-                            href="#"
-                            aria-label="TikTok"
-                        >
-                            <i class="bi bi-tiktok"></i>
-                        </a>
-
-                        <a
-                            href="#"
-                            aria-label="YouTube"
-                        >
-                            <i class="bi bi-youtube"></i>
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <hr class="footer-divider">
-
 
             <div class="footer-bottom">
 
@@ -422,15 +369,20 @@
     </footer>
 
 
-    <!-- Bootstrap -->
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     ></script>
 
-    <!-- JS KYNEX -->
+
     <script
         src="../../assets/js/app.js"
         defer
+    ></script>
+
+
+    <script
+        type="module"
+        src="../../assets/js/modules/routine.js"
     ></script>
 
 </body>
